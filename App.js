@@ -1,13 +1,14 @@
 import "react-native-gesture-handler";
 import { createStackNavigator } from '@react-navigation/stack';
-import { StyleSheet, Text, View, StatusBar, Alert, useWindowDimensions } from 'react-native';
+import { StatusBar, Alert, useWindowDimensions } from 'react-native';
 import LoginView from './src/views/auth/LoginView';
 import RegisterView from './src/views/auth/RegisterView';
-import HomeView from './src/views/main/HomeView';
 import InProgressView from './src/views/drawer/InProgressView';
 import ToDoView from './src/views/drawer/ToDoView';
 import BacklogView from './src/views/drawer/BacklogView';
 import ReviewView from './src/views/drawer/ReviewView';
+import ProfileView from "./src/views/drawer/ProfileView";
+import CreateProjectView from "./src/views/main/CreateProjectView";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -42,11 +43,16 @@ function AuthNavigator() {
 
 function MainNavigator() {
   return (
-    <Stack.Navigator initialRouteName="HomeView">
+    <Stack.Navigator initialRouteName="DrawerNav">
       <Stack.Screen
-        name="HomeView"
-        component={HomeView}
+        name="DrawerNav"
+        component={DrawerNavigator}
         options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="CreateProjectView"
+        component={CreateProjectView}
+        options={{title: 'New Project'}}
       />
       <Stack.Screen
         name="AuthScreen"
@@ -63,26 +69,11 @@ function DrawerNavigator() {
 
   return (
     <Drawer.Navigator
-      initialRouteName="In Progress"
+      initialRouteName="ToDoView"
       screenOptions={{
         drawerType: dimensions.width >= 768 ? 'permanent' : 'slide',
       }}
     >
-      <Drawer.Screen
-        name="InProgressView"
-        component={InProgressView}
-        options={{
-          title: "In Progress",
-          drawerIcon: ({focused, size}) => (
-              <MaterialCommunityIcons
-                name="progress-clock"
-                size={size}
-                color={focused ? '#007AFF' : '#ababab'}
-              />
-          ),
-          drawerLabelStyle: {textTransform: 'uppercase'}
-        }}
-      />
       <Drawer.Screen
         name="ToDoView"
         component={ToDoView}
@@ -91,6 +82,21 @@ function DrawerNavigator() {
           drawerIcon: ({focused, size}) => (
               <MaterialCommunityIcons
                 name="format-list-bulleted"
+                size={size}
+                color={focused ? '#007AFF' : '#ababab'}
+              />
+          ),
+          drawerLabelStyle: {textTransform: 'uppercase'}
+        }}
+      />
+      <Drawer.Screen
+        name="InProgressView"
+        component={InProgressView}
+        options={{
+          title: "In Progress",
+          drawerIcon: ({focused, size}) => (
+              <MaterialCommunityIcons
+                name="progress-clock"
                 size={size}
                 color={focused ? '#007AFF' : '#ababab'}
               />
@@ -128,6 +134,21 @@ function DrawerNavigator() {
           drawerLabelStyle: {textTransform: 'uppercase'}
         }}
       />
+      <Drawer.Screen
+        name="ProfileView"
+        component={ProfileView}
+        options={{
+          title: "My Profile",
+          drawerIcon: ({focused, size}) => (
+              <MaterialCommunityIcons
+                name="account"
+                size={size}
+                color={focused ? '#007AFF' : '#ababab'}
+              />
+          ),
+          drawerLabelStyle: {textTransform: 'uppercase'}
+        }}
+      />
     </Drawer.Navigator>
   )
 }
@@ -154,7 +175,7 @@ export default function App() {
     <NavigationContainer>
       <StatusBar barStyle={'dark-content'} backgroundColor='white' />
       {currentUser ? 
-        <DrawerNavigator />
+        <MainNavigator />
         : <AuthNavigator />
       }
     </NavigationContainer>
