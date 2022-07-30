@@ -5,7 +5,6 @@ import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import mongoose from "mongoose";
 
 const CreateProjectView = () => {
 
@@ -22,13 +21,11 @@ const CreateProjectView = () => {
             setLoading(true)
             try {
                 const userId = await AsyncStorage.getItem('userId')
-                const userId2 = JSON.parse(userId)
-
                 const response = await axios.post('http://10.2.71.238:8000/api/project/create', {
                     title: title.trim(),
                     description: description.trim(),
                     image: image.trim(),
-                    user: userId2.user._id
+                    user: userId
                 })
                 const data = await response.data
                 navigation.goBack()

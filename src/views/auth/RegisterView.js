@@ -30,11 +30,8 @@ const RegisterView = () => {
                 })
                 const data = await response.data
                 console.log(data)
-                console.log(JSON.stringify(data))
-                /**const id = mongoose.Types.ObjectId(data.user._id)
-                console.log(data.user._id, id, typeof(id))**/
 
-                await AsyncStorage.setItem('userId', JSON.stringify(data))
+                await AsyncStorage.setItem('userId', data.user._id)
                 navigation.reset({
                     index: 0,
                     routes: [{name: 'MainScreen'}]

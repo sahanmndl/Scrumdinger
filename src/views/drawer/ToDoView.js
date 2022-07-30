@@ -1,13 +1,41 @@
-import React, { useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Platform, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Colors from '../../constants/Colors';
 import Feather from "react-native-vector-icons/Feather";
+import ProjectItem from "../../components/ProjectItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 
 const ToDoView = () => {
 
     const navigation = useNavigation()
+    const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(false)
+
+    const readProjects = async () => {
+        const userId = await AsyncStorage.getItem('userId')
+        console.log(userId)
+        try {
+            setLoading(true)
+            //const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+            //const json = await response.json()
+            const response = await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
+            const data = response.data
+            console.log(data.projects.projects)
+            const json = data.projects.projects
+            setProjects([...json])
+        } catch (err) {
+            Alert.alert('Error!', err.message)
+            console.log(err)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        readProjects()
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -15,7 +43,12 @@ const ToDoView = () => {
                 {loading ? <ActivityIndicator size={'large'} color={Colors.BLUE} /> :
                     <FlatList
                         style={{flex: 1}}
-
+                        data={projects}
+                        numColumns={WIDTH < 768 ? 1 : 2}
+                        keyExtractor={({_id}) => _id}
+                        renderItem={({item}) => (
+                            <ProjectItem item={item} />
+                        )}
                     />
                 }
             </View>
@@ -30,6 +63,8 @@ const ToDoView = () => {
 }
 
 export default ToDoView
+
+const WIDTH = Dimensions.get('window').width
 
 const styles = StyleSheet.create({
     container: {
