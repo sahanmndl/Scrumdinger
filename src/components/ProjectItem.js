@@ -1,13 +1,13 @@
 import React from "react";
 import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
 
 const ProjectItem = ({ item }) => {
 
     const navigation = useNavigation()
-    const { title, description, priority, image } = item
+    const { _id, title, description, priority, image } = item
 
     console.log(item)
 
@@ -15,6 +15,7 @@ const ProjectItem = ({ item }) => {
         <TouchableOpacity 
             style={styles.container}
             onPress={() => navigation.navigate('ProjectDetailsView', {
+                _id: _id,
                 title: title,
                 description: description,
                 image: image,
@@ -30,8 +31,28 @@ const ProjectItem = ({ item }) => {
                     borderTopRightRadius={8}
                 /> : null
             }
+            <TouchableOpacity
+                style={{
+                    borderColor: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                    borderWidth: 1, 
+                    borderRadius: 8, 
+                    alignSelf: 'flex-start', 
+                    paddingVertical: 2,
+                    paddingHorizontal: 4
+                }}
+            >
+                <Text
+                    style={{
+                        color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                        fontSize: 11,
+                        fontWeight: '500'
+                    }}
+                >
+                    {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
+                </Text>
+            </TouchableOpacity>
             <Text style={styles.title}>{title}</Text>
-            <Text 
+            <Text
                 style={styles.description}
                 ellipsizeMode="tail" 
                 numberOfLines={10}
@@ -39,19 +60,23 @@ const ProjectItem = ({ item }) => {
                 {description}
             </Text>
             <View style={styles.bottomBar}>
-                <Image
-                    style={styles.priorityImg}
-                    source={priority === 1 ? require('../../assets/green.png')
-                        : priority === 2 ? require('../../assets/yellow.png')
-                        : priority === 3 ? require('../../assets/red.png')
-                        : require('../../assets/priority-placeholder.png')}
-                    defaultSource={require('../../assets/priority-placeholder.png')}
-                />
+                <TouchableOpacity 
+                    style={{alignSelf: 'flex-start'}}
+                    onPress={() => navigation.navigate('UpdateProjectView', {
+                        _id: _id,
+                        title: title,
+                        description: description,
+                        image: image,
+                        priority: priority
+                    })}
+                >
+                    <Icon name="edit" size={24} color={Colors.BLUE} />
+                </TouchableOpacity>
                 <TouchableOpacity 
                     style={{alignSelf: 'flex-end'}}
                     onPress={() => console.log('delete')}
                 >
-                    <Icon name="delete" size={26} color={Colors.DARK_GRAY} />
+                    <Icon name="delete" size={24} color={Colors.DARK_GRAY} />
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
@@ -80,7 +105,8 @@ const styles = StyleSheet.create({
         height: 120,
         width: '100%',
         borderTopStartRadius: 8,
-        borderBottomEndRadius: 8
+        borderBottomEndRadius: 8,
+        marginBottom: 8
     },
     title: {
         fontSize: 20,
@@ -89,16 +115,13 @@ const styles = StyleSheet.create({
     },
     description: {
         fontSize: 16,
-        marginVertical: 8,
+        marginTop: 8,
         color: Colors.DARK
     },
     bottomBar: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
-    },
-    priorityImg : {
-        height: 20,
-        width: 20
+        alignItems: 'center',
+        marginTop: 10
     }
 })

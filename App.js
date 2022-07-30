@@ -10,6 +10,7 @@ import ReviewView from './src/views/drawer/ReviewView';
 import ProfileView from "./src/views/drawer/ProfileView";
 import CreateProjectView from "./src/views/main/CreateProjectView";
 import ProjectDetailsView from "./src/views/main/ProjectDetailsView";
+import UpdateProjectView from "./src/views/main/UpdateProjectView";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -54,6 +55,11 @@ function MainNavigator() {
         name="CreateProjectView"
         component={CreateProjectView}
         options={{title: 'New Project'}}
+      />
+      <Stack.Screen
+        name="UpdateProjectView"
+        component={UpdateProjectView}
+        options={{title: "Update Project"}}
       />
       <Stack.Screen
         name="ProjectDetailsView"

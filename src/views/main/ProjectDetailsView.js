@@ -4,7 +4,7 @@ import Colors from "../../constants/Colors";
 
 const ProjectDetailsView = ({ route }) => {
 
-    const {title, description, image, priority} = route.params
+    const {_id, title, description, image, priority} = route.params
 
     return (
         <View style={styles.container}>
@@ -41,7 +41,8 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 24,
-        fontWeight: '700'
+        fontWeight: '700',
+        marginTop: 10
     },
     description: {
         fontSize: 18,
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 240,
-        marginVertical: 10,
+        marginTop: 10,
         borderRadius: 8
     }
 })
