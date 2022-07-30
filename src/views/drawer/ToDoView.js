@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Platform, Dimensions } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Dimensions } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Colors from '../../constants/Colors';
 import Feather from "react-native-vector-icons/Feather";
 import ProjectItem from "../../components/ProjectItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
+import NoResults from "../../components/NoResults";
 
 const ToDoView = () => {
 
@@ -57,6 +58,7 @@ const ToDoView = () => {
                         numColumns={WIDTH < 768 ? 1 : 2}
                         onRefresh={onRefresh}
                         refreshing={refresh}
+                        ListEmptyComponent={NoResults}
                         keyExtractor={({_id}) => _id}
                         renderItem={({item}) => (
                             <ProjectItem item={item} />
