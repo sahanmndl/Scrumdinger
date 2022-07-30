@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Platform, Dimensions } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Colors from '../../constants/Colors';
 import Feather from "react-native-vector-icons/Feather";
 import ProjectItem from "../../components/ProjectItem";
@@ -10,6 +10,7 @@ import axios from "axios";
 const ToDoView = () => {
 
     const navigation = useNavigation()
+    const isFocused = useIsFocused()
     const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(false)
 
@@ -25,17 +26,19 @@ const ToDoView = () => {
             console.log(data.projects.projects)
             const json = data.projects.projects
             setProjects([...json])
+            return true
         } catch (err) {
             Alert.alert('Error!', err.message)
             console.log(err)
+            return false
         } finally {
             setLoading(false)
         }
     }
 
     useEffect(() => {
-        readProjects()
-    }, [])
+        isFocused && readProjects()
+    }, [isFocused])
 
     return (
         <View style={styles.container}>
