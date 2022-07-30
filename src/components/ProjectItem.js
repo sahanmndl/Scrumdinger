@@ -1,8 +1,9 @@
 import React from "react";
-import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
 import Colors from "../constants/Colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 
 const ProjectItem = ({ item }) => {
 
@@ -10,6 +11,35 @@ const ProjectItem = ({ item }) => {
     const { _id, title, description, priority, image } = item
 
     console.log(item)
+
+    const deleteProject = async () => {
+        try {
+            const response = await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
+            const data = await response.data
+            return data
+        } catch (err) {
+            console.log(err)
+            Alert.alert('Error!', err.message)
+        }
+    }
+
+    const deleteAlert = () => {
+        Alert.alert(
+            "Confirmation", "Do you want to delete this project?",
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log("Cancel"),
+                    style: "cancel",
+                },
+                {
+                    text: 'OK',
+                    onPress: () => deleteProject()
+                }
+            ],
+            {cancelable: true}
+        )
+    }
 
     return (
         <TouchableOpacity 
@@ -74,7 +104,7 @@ const ProjectItem = ({ item }) => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={{alignSelf: 'flex-end'}}
-                    onPress={() => console.log('delete')}
+                    onPress={() => deleteAlert()}
                 >
                     <Icon name="delete" size={24} color={Colors.DARK_GRAY} />
                 </TouchableOpacity>
