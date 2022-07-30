@@ -5,6 +5,7 @@ import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import { Picker } from "@react-native-picker/picker";
 
 const CreateProjectView = () => {
 
@@ -12,11 +13,14 @@ const CreateProjectView = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState("")
+    const [priority, setPriority] = useState(0)
     const [loading, setLoading] = useState(false)
 
     const createProject = async () => {
         if(title.trim() == "" || description.trim() == "" || image.trim() == "") {
             Alert.alert('Error!', 'Inputs cannot be empty')
+        } else if(priority == 0) {
+            Alert.alert('Error!', 'Please set a priority level')
         } else {
             setLoading(true)
             try {
@@ -25,6 +29,7 @@ const CreateProjectView = () => {
                     title: title.trim(),
                     description: description.trim(),
                     image: image.trim(),
+                    priority: priority,
                     user: userId
                 })
                 const data = await response.data
@@ -41,12 +46,18 @@ const CreateProjectView = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView
-                keyboardDismissMode="on-drag"
-            >
+            <ScrollView>
                 <TextInput
                     style={styles.textInput}
-                    mode='outlined'
+                    mode='flat'
+                    label="Enter Image link"
+                    value={image}
+                    onChangeText={image => setImage(image)}
+                />
+                <View style={styles.innerMargin} />
+                <TextInput
+                    style={styles.textInput}
+                    mode='flat'
                     label="Project Title"
                     maxLength={64}
                     value={title}
@@ -55,34 +66,39 @@ const CreateProjectView = () => {
                 <View style={styles.innerMargin} />
                 <TextInput
                     style={styles.textInput}
-                    mode='outlined'
+                    mode='flat'
                     label="Project Description"
                     maxLength={1024}
                     multiline={true}
-                    numberOfLines={16}
+                    
                     value={description}
                     onChangeText={description => setDescription(description)}
                 />
                 <View style={styles.innerMargin} />
-                <TextInput
-                    style={styles.textInput}
-                    mode='outlined'
-                    label="Image"
-                    value={image}
-                    onChangeText={image => setImage(image)}
-                />
-                <View style={styles.innerMargin} />
-                <TouchableOpacity
-                    style={styles.buttonSubmit}
-                    disabled={loading ? true : false}
-                    onPress={() => createProject()}
+                
+                <Picker
+                    style={styles.picker}
+                    mode="dropdown"
+                    selectedValue={priority}
+                    onValueChange={(val, index) => setPriority(val)}
                 >
+                    <Picker.Item label="Set Priority" value={0} />
+                    <Picker.Item label="Low" value={1}/>
+                    <Picker.Item label="Medium" value={2}/>
+                    <Picker.Item label="High" value={3}/>
+                </Picker>
+                <View style={styles.innerMargin} />
+            </ScrollView>
+            <TouchableOpacity
+                style={styles.buttonSubmit}
+                disabled={loading ? true : false}
+                onPress={() => createProject()}
+            >
                 {loading ?
                     <ActivityIndicator color={'white'}/>
                     : <Text style={styles.btnText}>ADD</Text>
                 }
             </TouchableOpacity>
-            </ScrollView>
         </View>
     )
 }
@@ -100,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     textInput: {
-        width: WIDTH < 768 ? WIDTH - 20 : '100%',
+        width: WIDTH < 768 ? WIDTH - 20 : '50%',
         borderRadius: 4,
         backgroundColor: 'white'
     },
@@ -120,5 +136,14 @@ const styles = StyleSheet.create({
         color: "#FFF",
         fontSize: 15,
         fontWeight: "500"
+    },
+    pickerContainer: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    picker: {
+        width: WIDTH - 20,
+        borderWidth: 1,
+        backgroundColor: 'rgba(52, 52, 52, 0.0)',
     },
 })
