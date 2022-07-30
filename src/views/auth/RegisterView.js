@@ -5,6 +5,7 @@ import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import mongoose from "mongoose";
 
 const RegisterView = () => {
 
@@ -28,8 +29,12 @@ const RegisterView = () => {
                     password: password.trim()
                 })
                 const data = await response.data
-                await AsyncStorage.setItem('userId', data.user._id)
-                console.log(data.user._id)
+                console.log(data)
+                console.log(JSON.stringify(data))
+                /**const id = mongoose.Types.ObjectId(data.user._id)
+                console.log(data.user._id, id, typeof(id))**/
+
+                await AsyncStorage.setItem('userId', JSON.stringify(data))
                 navigation.reset({
                     index: 0,
                     routes: [{name: 'MainScreen'}]

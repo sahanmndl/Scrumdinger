@@ -34,7 +34,7 @@ export default ToDoView
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 12,
+        padding: 10,
         backgroundColor: Colors.WHITISH2
     },
     fab: {

@@ -12,6 +12,7 @@ const ProfileView = () => {
         try {
             const user = await AsyncStorage.getItem('userId')
             setCurrentUser(user)
+            console.log(user, typeof(user))
         } catch (err) {
             console.log(err)
             Alert.alert('Error!', err.message)
