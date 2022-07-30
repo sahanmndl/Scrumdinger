@@ -61,7 +61,7 @@ const CreateProjectView = () => {
                     style={styles.textInput}
                     mode='flat'
                     label="Project Title"
-                    maxLength={64}
+                    maxLength={1024}
                     value={title}
                     onChangeText={title => setTitle(title)}
                 />

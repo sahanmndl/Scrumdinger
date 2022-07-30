@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import Colors from "../../constants/Colors";
+import Autolink from "react-native-autolink";
 
 const ProjectDetailsView = ({ route }) => {
 
@@ -24,8 +25,12 @@ const ProjectDetailsView = ({ route }) => {
                         source={{uri: image}}
                     /> : null
                 }
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.description}>{description}</Text>
+                <Text style={styles.title}>
+                    <Autolink text={title} email url phone='sms' />
+                </Text>
+                <Text style={styles.description}>
+                    <Autolink text={description} email url phone='sms' />
+                </Text>
             </ScrollView>
         </View>
     )

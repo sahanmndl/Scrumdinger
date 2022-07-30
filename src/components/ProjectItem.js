@@ -4,6 +4,7 @@ import Colors from "../constants/Colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import Autolink from "react-native-autolink";
 
 const ProjectItem = ({ item }) => {
 
@@ -81,13 +82,19 @@ const ProjectItem = ({ item }) => {
                     {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
                 </Text>
             </TouchableOpacity>
-            <Text style={styles.title}>{title}</Text>
+            <Text 
+                style={styles.title}
+                numberOfLines={3}
+                ellipsizeMode='tail'
+            >
+                <Autolink text={title} email url phone='sms' />
+            </Text>
             <Text
                 style={styles.description}
-                ellipsizeMode="tail" 
                 numberOfLines={10}
+                ellipsizeMode='tail'
             >
-                {description}
+                <Autolink text={description} email url phone='sms' />
             </Text>
             <View style={styles.bottomBar}>
                 <TouchableOpacity 
