@@ -13,6 +13,7 @@ const ToDoView = () => {
     const isFocused = useIsFocused()
     const [projects, setProjects] = useState([])
     const [loading, setLoading] = useState(false)
+    const [refresh, setRefresh] = useState(false)
 
     const readProjects = async () => {
         const userId = await AsyncStorage.getItem('userId')
@@ -32,8 +33,14 @@ const ToDoView = () => {
             console.log(err)
             return false
         } finally {
+            setRefresh(false)
             setLoading(false)
         }
+    }
+
+    const onRefresh = () => {
+        setRefresh(true)
+        readProjects()
     }
 
     useEffect(() => {
@@ -48,6 +55,8 @@ const ToDoView = () => {
                         style={{flex: 1}}
                         data={projects}
                         numColumns={WIDTH < 768 ? 1 : 2}
+                        onRefresh={onRefresh}
+                        refreshing={refresh}
                         keyExtractor={({_id}) => _id}
                         renderItem={({item}) => (
                             <ProjectItem item={item} />
