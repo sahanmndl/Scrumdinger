@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dimensions, ScrollView, StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import { Dimensions, ScrollView, StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from "react-native";
 import { TextInput } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import axios from "axios";
@@ -46,7 +46,9 @@ const CreateProjectView = () => {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
+            <ScrollView
+                showsVerticalScrollIndicator={Platform.OS === 'web' ? true : false}
+            >
                 <TextInput
                     style={styles.textInput}
                     mode='flat'

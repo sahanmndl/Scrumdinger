@@ -1,7 +1,8 @@
 export default {
     BLUE: "#007AFF",
-    RED: "#D32F2F",
-    GREEN: "#4CAF50",
+    RED: "#FF1744",
+    GREEN: "#00E676",
+    YELLOW: "#FFEA00",
     DARK: "#121212",
     DARK2: "#0F2027",
     WHITISH: "#EDEDED",

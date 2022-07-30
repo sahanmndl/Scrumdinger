@@ -9,6 +9,7 @@ import BacklogView from './src/views/drawer/BacklogView';
 import ReviewView from './src/views/drawer/ReviewView';
 import ProfileView from "./src/views/drawer/ProfileView";
 import CreateProjectView from "./src/views/main/CreateProjectView";
+import ProjectDetailsView from "./src/views/main/ProjectDetailsView";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -53,6 +54,11 @@ function MainNavigator() {
         name="CreateProjectView"
         component={CreateProjectView}
         options={{title: 'New Project'}}
+      />
+      <Stack.Screen
+        name="ProjectDetailsView"
+        component={ProjectDetailsView}
+        options={{title: ""}}
       />
       <Stack.Screen
         name="AuthScreen"

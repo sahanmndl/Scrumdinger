@@ -2,15 +2,25 @@ import React from "react";
 import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Colors from "../constants/Colors";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from "@react-navigation/native";
 
 const ProjectItem = ({ item }) => {
 
+    const navigation = useNavigation()
     const { title, description, priority, image } = item
 
     console.log(item)
 
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity 
+            style={styles.container}
+            onPress={() => navigation.navigate('ProjectDetailsView', {
+                title: title,
+                description: description,
+                image: image,
+                priority: priority
+            })}
+        >
             {image !== "" ?
                 <Image
                     style={styles.projectImg}
