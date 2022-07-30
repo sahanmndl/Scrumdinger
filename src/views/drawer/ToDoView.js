@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Dimensions } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, View, TouchableOpacity, Alert, Dimensions, Platform } from "react-native";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import Colors from '../../constants/Colors';
 import Feather from "react-native-vector-icons/Feather";
@@ -59,6 +59,7 @@ const ToDoView = () => {
                         onRefresh={onRefresh}
                         refreshing={refresh}
                         ListEmptyComponent={NoResults}
+                        showsVerticalScrollIndicator={Platform.OS === 'web' ? true : false}
                         keyExtractor={({_id}) => _id}
                         renderItem={({item}) => (
                             <ProjectItem item={item} />

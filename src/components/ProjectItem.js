@@ -5,10 +5,21 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProjectItem = ({ item }) => {
 
-    const { title, description, priority } = item
+    const { title, description, priority, image } = item
+
+    console.log(item)
 
     return (
         <TouchableOpacity style={styles.container}>
+            {image !== "" ?
+                <Image
+                    style={styles.projectImg}
+                    source={{uri: image}}
+                    defaultSource={require('../../assets/placeholder.png')}
+                    borderTopLeftRadius={8}
+                    borderTopRightRadius={8}
+                /> : null
+            }
             <Text style={styles.title}>{title}</Text>
             <Text 
                 style={styles.description}
@@ -55,9 +66,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         marginEnd: WIDTH < 768 ? 0 : 10
     },
+    projectImg: {
+        height: 120,
+        width: '100%',
+        borderTopStartRadius: 8,
+        borderBottomEndRadius: 8
+    },
     title: {
         fontSize: 20,
-        fontWeight: '500'
+        fontWeight: '500',
+        marginTop: 10
     },
     description: {
         fontSize: 16,

@@ -17,7 +17,7 @@ const CreateProjectView = () => {
     const [loading, setLoading] = useState(false)
 
     const createProject = async () => {
-        if(title.trim() == "" || description.trim() == "" || image.trim() == "") {
+        if(title.trim() == "" || description.trim() == "") {
             Alert.alert('Error!', 'Inputs cannot be empty')
         } else if(priority == 0) {
             Alert.alert('Error!', 'Please set a priority level')
