@@ -98,7 +98,7 @@ function DrawerNavigator() {
                 color={focused ? '#007AFF' : '#ababab'}
               />
           ),
-          drawerLabelStyle: {textTransform: 'uppercase'}
+          drawerLabelStyle: {textTransform: 'uppercase'},
         }}
       />
       <Drawer.Screen

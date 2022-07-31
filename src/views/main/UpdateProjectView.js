@@ -54,6 +54,7 @@ const UpdateProjectView = ({ route }) => {
             >
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
                     label="Enter Image link"
                     value={imageUpdate}
@@ -62,6 +63,7 @@ const UpdateProjectView = ({ route }) => {
                 <View style={styles.innerMargin} />
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
                     label="Project Title"
                     maxLength={64}
@@ -71,6 +73,7 @@ const UpdateProjectView = ({ route }) => {
                 <View style={styles.innerMargin} />
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
                     label="Project Description"
                     maxLength={1024}

@@ -16,6 +16,7 @@ const ProjectDetailsView = ({ route }) => {
                     <Image
                         style={styles.image}
                         source={{uri: image}}
+                        defaultSource={require('../../../assets/placeholder.png')}
                     /> : null
                 }
                 <TouchableOpacity
@@ -31,7 +32,7 @@ const ProjectDetailsView = ({ route }) => {
                     <Text
                         style={{
                             color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
-                            fontSize: 14,
+                            fontSize: 13,
                             fontWeight: '500'
                         }}
                     >
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     description: {
-        fontSize: 18,
+        fontSize: 17,
         color: Colors.DARK,
         marginTop: 10
     },
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 240,
         marginBottom: 10,
-        borderRadius: 8
+        borderRadius: 8,
+        backgroundColor: Colors.WHITISH
     }
 })

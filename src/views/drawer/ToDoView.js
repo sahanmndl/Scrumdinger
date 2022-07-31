@@ -7,12 +7,17 @@ import ProjectItem from "../../components/ProjectItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import NoResults from "../../components/NoResults";
+import { Picker } from "@react-native-picker/picker";
 
 const ToDoView = () => {
 
     const navigation = useNavigation()
     const isFocused = useIsFocused()
-    const [projects, setProjects] = useState([])
+    const [projectsNew, setProjectsNew] = useState([])
+    const [projectsOld, setProjectsOld] = useState([])
+    const [projectsAsc, setProjectsAsc] = useState([])
+    const [projectsDesc, setProjectsDesc] = useState([])
+    const [sort, setSort] = useState("newest")
     const [loading, setLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
@@ -30,8 +35,14 @@ const ToDoView = () => {
                 .then((response) => {
                     var json = response.data.projects.projects
                     var filteredJSON = json.filter(it => it.category == "todo")
-                    console.log(json, filteredJSON)
-                    setProjects([...filteredJSON])
+                    var tempJSON1 = filteredJSON
+                    //var tempJSON2 = filteredJSON
+                    //var ascJSON = tempJSON1.sort((a, b) => a.priority - b.priority)
+                    //var descJSON = tempJSON2.sort((a, b) => b.priority - a.priority)
+                    //console.log(filteredJSON.sort((a, b) => b.priority - a.priority))
+                    //console.log(sort, filteredJSON)
+                    //setProjectsNew([...tempJSON1.reverse()])
+                    setProjectsOld([...filteredJSON])
                 })
             return true
         } catch (err) {
@@ -55,11 +66,22 @@ const ToDoView = () => {
 
     return (
         <View style={styles.container}>
+            <Picker
+                style={styles.picker}
+                mode="dropdown"
+                selectedValue={sort}
+                onValueChange={(val) => setSort(val)}
+            >
+                <Picker.Item label="Newest" value="newest"/>
+                <Picker.Item label="Oldest" value="oldest"/>
+                <Picker.Item label="Ascending Priority" value="ascending"/>
+                <Picker.Item label="Descending Priority" value="descending"/>
+            </Picker>
             <View style={{flex: 1}}>
                 {loading ? <ActivityIndicator size={'large'} color={Colors.BLUE} /> :
                     <FlatList
                         style={{flex: 1}}
-                        data={projects}
+                        data={projectsOld}
                         numColumns={WIDTH < 768 ? 1 : 2}
                         onRefresh={onRefresh}
                         refreshing={refresh}
@@ -107,5 +129,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 1,
         shadowRadius: 4,
         elevation: 4,
-    }
+    },
+    pickerContainer: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    picker: {
+        width: WIDTH - 20,
+        borderWidth: 1,
+        backgroundColor: 'rgba(52, 52, 52, 0.0)',
+    },
 })

@@ -139,7 +139,8 @@ const styles = StyleSheet.create({
         width: '100%',
         borderTopStartRadius: 8,
         borderBottomEndRadius: 8,
-        marginBottom: 8
+        marginBottom: 8,
+        backgroundColor: Colors.WHITISH
     },
     title: {
         fontSize: 20,

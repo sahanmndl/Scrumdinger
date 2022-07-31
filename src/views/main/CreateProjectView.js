@@ -55,16 +55,18 @@ const CreateProjectView = () => {
             >
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
-                    label="Enter Image link"
+                    label="Image link"
                     value={image}
                     onChangeText={image => setImage(image)}
                 />
                 <View style={styles.innerMargin} />
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
-                    label="Project Title"
+                    label="Project Title *"
                     maxLength={1024}
                     value={title}
                     onChangeText={title => setTitle(title)}
@@ -72,11 +74,11 @@ const CreateProjectView = () => {
                 <View style={styles.innerMargin} />
                 <TextInput
                     style={styles.textInput}
+                    activeUnderlineColor={Colors.BLUE}
                     mode='flat'
-                    label="Project Description"
+                    label="Project Description *"
                     maxLength={1024}
                     multiline={true}
-                    
                     value={description}
                     onChangeText={description => setDescription(description)}
                 />
@@ -134,7 +136,6 @@ const styles = StyleSheet.create({
     },
     textInput: {
         width: WIDTH < 768 ? WIDTH - 20 : '50%',
-        borderRadius: 4,
         backgroundColor: 'white'
     },
     innerMargin: {

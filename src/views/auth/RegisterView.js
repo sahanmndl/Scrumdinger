@@ -31,7 +31,9 @@ const RegisterView = () => {
                 const data = await response.data
                 console.log(data)
 
+                await AsyncStorage.setItem('user', JSON.stringify(data.user))
                 await AsyncStorage.setItem('userId', data.user._id)
+
                 navigation.reset({
                     index: 0,
                     routes: [{name: 'MainScreen'}]
