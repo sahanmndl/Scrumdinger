@@ -77,7 +77,6 @@ const CreateProjectView = () => {
                     activeUnderlineColor={Colors.BLUE}
                     mode='flat'
                     label="Project Description *"
-                    maxLength={1024}
                     multiline={true}
                     value={description}
                     onChangeText={description => setDescription(description)}

@@ -94,7 +94,7 @@ const ProjectItem = ({ item }) => {
             <View style={styles.bottomBar}>
                 <TouchableOpacity 
                     style={{alignSelf: 'flex-end', marginLeft: 20}}
-                    onPress={() => deleteAlert()}
+                    onPress={() => Platform.OS == 'web' ? deleteProject() : deleteAlert()}
                 >
                     <Icon name="delete" size={24} color={Colors.DARK_GRAY} />
                 </TouchableOpacity>

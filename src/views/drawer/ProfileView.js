@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, View, RefreshControl, TouchableOpacity, Dimensions, ActivityIndicator } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, View, RefreshControl, TouchableOpacity, Dimensions, ActivityIndicator, Platform } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
@@ -108,7 +108,7 @@ const ProfileView = () => {
             <TouchableOpacity
                 style={styles.btnLogout}
                 disabled={loading ? true : false}
-                onPress={() => logoutAlert()}
+                onPress={() => Platform.OS == 'web' ? logout() : logoutAlert()}
             >
                 {loading ?
                     <ActivityIndicator color={'white'}/>
