@@ -21,13 +21,18 @@ const ToDoView = () => {
         console.log(userId)
         try {
             setLoading(true)
-            //const response = await fetch('https://jsonplaceholder.typicode.com/posts')
-            //const json = await response.json()
-            const response = await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
+            /**const response = await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
             const data = response.data
             console.log(data.projects.projects)
             const json = data.projects.projects
-            setProjects([...json])
+            setProjects([...json])*/
+            await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
+                .then((response) => {
+                    var json = response.data.projects.projects
+                    var filteredJSON = json.filter(it => it.category == "todo")
+                    console.log(json, filteredJSON)
+                    setProjects([...filteredJSON])
+                })
             return true
         } catch (err) {
             Alert.alert('Error!', err.message)

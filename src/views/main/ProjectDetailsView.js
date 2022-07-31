@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import Colors from "../../constants/Colors";
 import Autolink from "react-native-autolink";
 
@@ -12,19 +12,32 @@ const ProjectDetailsView = ({ route }) => {
             <ScrollView
                 showsVerticalScrollIndicator={Platform.OS === 'web' ? true : false}
             >
-                <Text style={{
-                    fontSize: 16, 
-                    fontWeight: '500', 
-                    color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED
-                }}>
-                    {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
-                </Text>
                 {image != "" ?
                     <Image
                         style={styles.image}
                         source={{uri: image}}
                     /> : null
                 }
+                <TouchableOpacity
+                    style={{
+                        borderColor: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                        borderWidth: 1, 
+                        borderRadius: 8, 
+                        alignSelf: 'flex-start', 
+                        paddingVertical: 2,
+                        paddingHorizontal: 4
+                    }}
+                >
+                    <Text
+                        style={{
+                            color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                            fontSize: 14,
+                            fontWeight: '500'
+                        }}
+                    >
+                        {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
+                    </Text>
+                </TouchableOpacity>
                 <Text style={styles.title}>
                     <Autolink text={title} email url phone='sms' />
                 </Text>
@@ -57,7 +70,7 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: 240,
-        marginTop: 10,
+        marginBottom: 10,
         borderRadius: 8
     }
 })

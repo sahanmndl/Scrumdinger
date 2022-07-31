@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from "react-native";
+import { Dimensions, Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert, ToastAndroid } from "react-native";
 import Colors from "../constants/Colors";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
@@ -11,17 +11,12 @@ const ProjectItem = ({ item }) => {
     const navigation = useNavigation()
     const { _id, title, description, priority, image } = item
 
-    console.log(item)
-
     const deleteProject = async () => {
-        try {
-            const response = await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
-            const data = await response.data
-            return data
-        } catch (err) {
-            console.log(err)
-            Alert.alert('Error!', err.message)
-        }
+        await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
+            .then(() => 
+                Platform.OS == 'android' ? ToastAndroid.show('Project deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
+                : Platform.OS == 'ios' ? Alert.alert('Success!', 'Project deleted') : null)
+            .catch(() => Alert.alert('Error!', 'Cannot delete project'))
     }
 
     const deleteAlert = () => {
@@ -98,7 +93,13 @@ const ProjectItem = ({ item }) => {
             </Text>
             <View style={styles.bottomBar}>
                 <TouchableOpacity 
-                    style={{alignSelf: 'flex-start'}}
+                    style={{alignSelf: 'flex-end', marginLeft: 20}}
+                    onPress={() => deleteAlert()}
+                >
+                    <Icon name="delete" size={24} color={Colors.DARK_GRAY} />
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    style={{alignSelf: 'flex-end'}}
                     onPress={() => navigation.navigate('UpdateProjectView', {
                         _id: _id,
                         title: title,
@@ -108,12 +109,6 @@ const ProjectItem = ({ item }) => {
                     })}
                 >
                     <Icon name="edit" size={24} color={Colors.BLUE} />
-                </TouchableOpacity>
-                <TouchableOpacity 
-                    style={{alignSelf: 'flex-end'}}
-                    onPress={() => deleteAlert()}
-                >
-                    <Icon name="delete" size={24} color={Colors.DARK_GRAY} />
                 </TouchableOpacity>
             </View>
         </TouchableOpacity>
@@ -156,8 +151,7 @@ const styles = StyleSheet.create({
         color: Colors.DARK
     },
     bottomBar: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: 'row-reverse',
         alignItems: 'center',
         marginTop: 10
     }

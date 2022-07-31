@@ -13,6 +13,7 @@ const CreateProjectView = () => {
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
     const [image, setImage] = useState("")
+    const [category, setCategory] = useState("")
     const [priority, setPriority] = useState(0)
     const [loading, setLoading] = useState(false)
 
@@ -21,6 +22,8 @@ const CreateProjectView = () => {
             Alert.alert('Error!', 'Inputs cannot be empty')
         } else if(priority == 0) {
             Alert.alert('Error!', 'Please set a priority level')
+        } else if(category == "category") {
+            Alert.alert('Error!', 'Please set a category')
         } else {
             setLoading(true)
             try {
@@ -29,6 +32,7 @@ const CreateProjectView = () => {
                     title: title.trim(),
                     description: description.trim(),
                     image: image.trim(),
+                    category: category,
                     priority: priority,
                     user: userId
                 })
@@ -77,7 +81,19 @@ const CreateProjectView = () => {
                     onChangeText={description => setDescription(description)}
                 />
                 <View style={styles.innerMargin} />
-                
+                <Picker
+                    style={styles.picker}
+                    mode="dropdown"
+                    selectedValue={category}
+                    onValueChange={(val, index) => setCategory(val)}
+                >
+                    <Picker.Item label="Set Category" value="category"/>
+                    <Picker.Item label="To Do" value="todo"/>
+                    <Picker.Item label="In Progress" value="progress"/>
+                    <Picker.Item label="Backlogs" value="backlogs"/>
+                    <Picker.Item label="Review" value="review"/>
+                </Picker>
+                <View style={styles.innerMargin} />
                 <Picker
                     style={styles.picker}
                     mode="dropdown"
@@ -89,7 +105,6 @@ const CreateProjectView = () => {
                     <Picker.Item label="Medium" value={2}/>
                     <Picker.Item label="High" value={3}/>
                 </Picker>
-                <View style={styles.innerMargin} />
             </ScrollView>
             <TouchableOpacity
                 style={styles.buttonSubmit}
