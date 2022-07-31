@@ -6,11 +6,13 @@ import ProjectItem from "../../components/ProjectItem";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import NoResults from "../../components/NoResults";
+import { Picker } from "@react-native-picker/picker";
 
 const InProgressView = () => {
 
     const isFocused = useIsFocused()
     const [projects, setProjects] = useState([])
+    const [filter, setFilter] = useState()
     const [loading, setLoading] = useState(false)
     const [refresh, setRefresh] = useState(false)
 
@@ -23,7 +25,6 @@ const InProgressView = () => {
                 .then((response) => {
                     var json = response.data.projects.projects
                     var filteredJSON = json.filter(it => it.category == "progress")
-                    console.log(json, filteredJSON)
                     setProjects([...filteredJSON])
                 })
             return true
@@ -48,11 +49,25 @@ const InProgressView = () => {
 
     return (
         <View style={styles.container}>
+            <Picker
+                style={styles.picker}
+                mode="dropdown"
+                selectedValue={filter}
+                onValueChange={(val) => setFilter(val)}
+            >
+                <Picker.Item label="All" value="all"/>
+                <Picker.Item label="Low Priority" value="low"/>
+                <Picker.Item label="Medium Priority" value="medium"/>
+                <Picker.Item label="High Priority" value="high"/>
+            </Picker>
             <View style={{flex: 1}}>
                 {loading ? <ActivityIndicator size={'large'} color={Colors.BLUE} /> :
                     <FlatList
                         style={{flex: 1}}
-                        data={projects}
+                        data={filter == 'low' ? projects.filter(it => it.priority == 1) : 
+                                filter == 'medium' ? projects.filter(it => it.priority == 2) :
+                                filter == 'high' ? projects.filter(it => it.priority == 3) :
+                                projects}
                         numColumns={WIDTH < 768 ? 1 : 2}
                         onRefresh={onRefresh}
                         refreshing={refresh}
@@ -78,5 +93,14 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 10,
         backgroundColor: Colors.WHITISH2
+    },
+    pickerContainer: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    picker: {
+        width: WIDTH - 20,
+        borderWidth: 1,
+        backgroundColor: 'rgba(52, 52, 52, 0.0)',
     }
 })
