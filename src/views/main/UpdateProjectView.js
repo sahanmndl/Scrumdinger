@@ -8,12 +8,13 @@ import { Picker } from "@react-native-picker/picker";
 
 const UpdateProjectView = ({ route }) => {
 
-    const {_id, title, description, image, priority} = route.params
+    const {_id, title, description, image, category, priority} = route.params
 
     const navigation = useNavigation()
     const [titleUpdate, setTitleUpdate] = useState(title)
     const [descriptionUpdate, setDescriptionUpdate] = useState(description)
     const [imageUpdate, setImageUpdate] = useState(image)
+    const [categoryUpdate, setCategoryUpdate] = useState(category)
     const [priorityUpdate, setPriorityUpdate] = useState(priority)
     const [loading, setLoading] = useState(false)
 
@@ -22,6 +23,8 @@ const UpdateProjectView = ({ route }) => {
             Alert.alert('Error!', 'Inputs cannot be empty')
         } else if(priorityUpdate == 0) {
             Alert.alert('Error!', 'Please set a priority level')
+        } else if (categoryUpdate == "category") {
+            Alert.alert('Error!', 'Please set a category')
         } else {
             setLoading(true)
             try {
@@ -29,6 +32,7 @@ const UpdateProjectView = ({ route }) => {
                     title: titleUpdate.trim(),
                     description: descriptionUpdate.trim(),
                     image: imageUpdate.trim(),
+                    category: categoryUpdate,
                     priority: priorityUpdate
                 })
                 const data = await response.data
@@ -76,19 +80,30 @@ const UpdateProjectView = ({ route }) => {
                     onChangeText={description => setDescriptionUpdate(description)}
                 />
                 <View style={styles.innerMargin} />
-                
+                <Picker
+                    style={styles.picker}
+                    mode="dropdown"
+                    selectedValue={categoryUpdate}
+                    onValueChange={(val) => setCategoryUpdate(val)}
+                >
+                    <Picker.Item label="Set Category" value="category"/>
+                    <Picker.Item label="To Do" value="todo"/>
+                    <Picker.Item label="In Progress" value="progress"/>
+                    <Picker.Item label="Backlogs" value="backlogs"/>
+                    <Picker.Item label="Review" value="review"/>
+                </Picker>
+                <View style={styles.innerMargin} />
                 <Picker
                     style={styles.picker}
                     mode="dropdown"
                     selectedValue={priorityUpdate}
                     onValueChange={(val) => setPriorityUpdate(val)}
                 >
-                    <Picker.Item label="Set Priority" value={0} />
+                    <Picker.Item label="Set Priority Level" value={0} />
                     <Picker.Item label="Low" value={1}/>
                     <Picker.Item label="Medium" value={2}/>
                     <Picker.Item label="High" value={3}/>
                 </Picker>
-                <View style={styles.innerMargin} />
             </ScrollView>
             <TouchableOpacity
                 style={styles.buttonSubmit}

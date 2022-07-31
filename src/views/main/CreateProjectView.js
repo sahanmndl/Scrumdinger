@@ -100,7 +100,7 @@ const CreateProjectView = () => {
                     selectedValue={priority}
                     onValueChange={(val, index) => setPriority(val)}
                 >
-                    <Picker.Item label="Set Priority" value={0} />
+                    <Picker.Item label="Set Priority Level" value={0} />
                     <Picker.Item label="Low" value={1}/>
                     <Picker.Item label="Medium" value={2}/>
                     <Picker.Item label="High" value={3}/>
