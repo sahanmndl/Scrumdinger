@@ -1,14 +1,17 @@
 import React, { useState } from "react";
 import { Dimensions, ScrollView, StyleSheet, Text, View, TouchableOpacity, Alert, ActivityIndicator, Platform } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, List } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
+import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 const CreateProjectView = () => {
 
+    var d = new Date();
+    console.log(d.getTime())
     const navigation = useNavigation()
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -16,8 +19,33 @@ const CreateProjectView = () => {
     const [category, setCategory] = useState("")
     const [priority, setPriority] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [date, setDate] = useState(new Date(d.getTime()))
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        setDate(currentDate);
+        console.log(currentDate)
+    }
+
+    const showMode = (currentMode) => {
+        DateTimePickerAndroid.open({
+            value: date,
+            onChange,
+            mode: currentMode,
+            is24Hour: true,
+        });
+    }
+
+    const showDatepicker = () => {
+        showMode('date');
+    }
+
+    const showTimepicker = () => {
+        showMode('time');
+    }
 
     const createProject = async () => {
+        console.log(date.toString(), typeof(date))
         if(title.trim() == "" || description.trim() == "") {
             Alert.alert('Error!', 'Inputs cannot be empty')
         } else if(priority == 0) {
@@ -66,7 +94,7 @@ const CreateProjectView = () => {
                     style={styles.textInput}
                     activeUnderlineColor={Colors.BLUE}
                     mode='flat'
-                    label="Project Title *"
+                    label="Title *"
                     maxLength={1024}
                     value={title}
                     onChangeText={title => setTitle(title)}
@@ -76,7 +104,7 @@ const CreateProjectView = () => {
                     style={styles.textInput}
                     activeUnderlineColor={Colors.BLUE}
                     mode='flat'
-                    label="Project Description *"
+                    label="Description *"
                     multiline={true}
                     value={description}
                     onChangeText={description => setDescription(description)}
@@ -86,7 +114,7 @@ const CreateProjectView = () => {
                     style={styles.picker}
                     mode="dropdown"
                     selectedValue={category}
-                    onValueChange={(val, index) => setCategory(val)}
+                    onValueChange={(val) => setCategory(val)}
                 >
                     <Picker.Item label="Set Category" value="category"/>
                     <Picker.Item label="To Do" value="todo"/>
@@ -99,13 +127,39 @@ const CreateProjectView = () => {
                     style={styles.picker}
                     mode="dropdown"
                     selectedValue={priority}
-                    onValueChange={(val, index) => setPriority(val)}
+                    onValueChange={(val) => setPriority(val)}
                 >
                     <Picker.Item label="Set Priority Level" value={0} />
                     <Picker.Item label="Low" value={1}/>
                     <Picker.Item label="Medium" value={2}/>
                     <Picker.Item label="High" value={3}/>
                 </Picker>
+                <View style={styles.innerMargin} />
+                <View>
+                    <List.Section>
+                        <List.Accordion
+                            style={{backgroundColor: 'white'}}
+                            title="Set Due Date and Time"
+                            left={props => <List.Icon {...props} icon="timer-sand" />}
+                        >
+                            <List.Item 
+                                title="Set Date"
+                                left={props => <List.Icon {...props} icon="calendar" color={Colors.BLUE} />}
+                                onPress={showDatepicker}
+                            />
+                            <List.Item
+                                title="Set Time"
+                                left={props => <List.Icon {...props} icon="clock-outline" color={Colors.BLUE} />}
+                                onPress={showTimepicker}
+                            />
+                        </List.Accordion>
+                        <View style={{alignItems: 'center', marginTop: 10}}>
+                            <Text style={{fontSize: 16}}>
+                                {date.toLocaleString()}
+                            </Text>
+                        </View>
+                    </List.Section>
+                </View>
             </ScrollView>
             <TouchableOpacity
                 style={styles.buttonSubmit}
