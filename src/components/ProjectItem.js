@@ -5,11 +5,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Autolink from "react-native-autolink";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const ProjectItem = ({ item }) => {
 
     const navigation = useNavigation()
     const { _id, title, description, priority, image, category, duedate, timestamp } = item
+
+    const iso = new Date(duedate)
+    const ist = iso.toLocaleString()
 
     const deleteProject = async () => {
         await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
@@ -59,26 +63,35 @@ const ProjectItem = ({ item }) => {
                     borderTopRightRadius={8}
                 /> : null
             }
-            <TouchableOpacity
-                style={{
-                    borderColor: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
-                    borderWidth: 1, 
-                    borderRadius: 8, 
-                    alignSelf: 'flex-start', 
-                    paddingVertical: 2,
-                    paddingHorizontal: 4
-                }}
-            >
-                <Text
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <TouchableOpacity
                     style={{
-                        color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
-                        fontSize: 11,
-                        fontWeight: '500'
+                        borderColor: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                        borderWidth: 1, 
+                        borderRadius: 8, 
+                        alignSelf: 'flex-start', 
+                        paddingVertical: 2,
+                        paddingHorizontal: 4
                     }}
+                    disabled={true}
                 >
-                    {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
-                </Text>
-            </TouchableOpacity>
+                    <Text
+                        style={{
+                            color: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
+                            fontSize: 11,
+                            fontWeight: '500'
+                        }}
+                    >
+                        {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.dateBtn} disabled={true}>
+                    <MaterialCommunityIcons name="timer-sand" size={16} color={Colors.DARK_GRAY} />
+                    <Text style={styles.dateText}>
+                        {ist.toUpperCase()}
+                    </Text>
+                </TouchableOpacity>
+            </View>
             <Text 
                 style={styles.title}
                 numberOfLines={3}
@@ -160,5 +173,20 @@ const styles = StyleSheet.create({
         flexDirection: 'row-reverse',
         alignItems: 'center',
         marginTop: 10
+    },
+    dateBtn: {
+        borderColor: Colors.DARK_GRAY, 
+        borderWidth: 1, 
+        borderRadius: 8, 
+        flexDirection: 'row',
+        paddingVertical: 1.5,
+        paddingHorizontal: 4,
+        marginStart: 10
+    },
+    dateText: {
+        color: Colors.DARK_GRAY, 
+        fontSize: 12,
+        fontWeight: '500',
+        marginStart: 6
     }
 })

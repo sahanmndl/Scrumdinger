@@ -1,8 +1,9 @@
 import React from "react";
-import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity, Linking } from "react-native";
 import Colors from "../../constants/Colors";
 import Autolink from "react-native-autolink";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { google } from "calendar-link";
 
 const ProjectDetailsView = ({ route }) => {
 
@@ -13,6 +14,12 @@ const ProjectDetailsView = ({ route }) => {
     const createdISO = new Date(timestamp)
     const createdIST = createdISO.toLocaleString()
     console.log(duedate, iso, ist, createdIST)
+
+    const addEventToCalendar = {
+        title: title,
+        description: description,
+        start: iso
+    }
 
     return (
         <View style={styles.container}>
@@ -48,7 +55,10 @@ const ProjectDetailsView = ({ route }) => {
                             {priority == 1 ? 'LOW' : priority == 2 ? 'MEDIUM' : 'HIGH'}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.dateBtn}>
+                    <TouchableOpacity 
+                        style={styles.dateBtn}
+                        onPress={() => Linking.openURL(google(addEventToCalendar))}
+                    >
                         <MaterialCommunityIcons name="calendar-edit" size={18} color={Colors.BLUE} />
                         <Text style={styles.dateText}>
                             {ist.toUpperCase()}
