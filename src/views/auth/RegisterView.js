@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { ActivityIndicator, Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { TextInput } from "react-native-paper";
 import Colors from "../../constants/Colors";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import mongoose from "mongoose";
 
 const RegisterView = () => {
 
@@ -54,60 +53,63 @@ const RegisterView = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 32, fontWeight: '600'}}>Sign Up</Text>
-            <View style={styles.innerMargin} />
-            <TextInput
-                style={styles.textInput}
-                mode='outlined'
-                label="Enter Email"
-                keyboardType="email-address"
-                activeOutlineColor={Colors.BLUE}
-                left={<TextInput.Icon name='email' color={Colors.DARK_GRAY} />}
-                value={email}
-                onChangeText={email => setEmail(email)}
-            />
-            <View style={styles.innerMargin} />
-            <TextInput
-                style={styles.textInput}
-                mode='outlined'
-                label="Enter Your Name"
-                maxLength={100}
-                activeOutlineColor={Colors.BLUE}
-                left={<TextInput.Icon name='account' color={Colors.DARK_GRAY} />}
-                value={name}
-                onChangeText={name => setName(name)}
-            />
-            <View style={styles.innerMargin} />
-            <TextInput
-                style={styles.textInput}
-                mode='outlined'
-                label="Set Password"
-                secureTextEntry
-                maxLength={24}
-                activeOutlineColor={Colors.BLUE}
-                left={<TextInput.Icon name='lock' color={Colors.DARK_GRAY} />}
-                value={password}
-                onChangeText={password => setPassword(password)}
-            />
-            <View style={styles.innerMargin} />
-            <TouchableOpacity
-                style={styles.buttonSubmit}
-                disabled={loading ? true : false}
-                onPress={() => register()}
-            >
-                {loading ?
-                    <ActivityIndicator color={'white'}/>
-                    : <Text style={styles.btnText}>REGISTER</Text>
-                }
-            </TouchableOpacity>
-            <View style={styles.innerMargin} />
-            <TouchableOpacity
-                style={styles.btn2}
-                disabled={loading ? true : false}
-                onPress={() => navigation.navigate('LoginView')}
-            >
-                <Text style={styles.btnText2}>Already have an account? Login!</Text>
-            </TouchableOpacity>
+            <View style={{flex: 0.1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 28, fontWeight: '700'}}>
+                    Create your account
+                </Text>
+            </View>
+            <View style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+                <TextInput
+                    style={styles.textInput}
+                    mode='outlined'
+                    label="Enter Email"
+                    keyboardType="email-address"
+                    activeOutlineColor={Colors.BLUE}
+                    left={<TextInput.Icon name='email' color={Colors.DARK_GRAY} />}
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                />
+                <View style={styles.innerMargin} />
+                <TextInput
+                    style={styles.textInput}
+                    mode='outlined'
+                    label="Enter Your Name"
+                    maxLength={100}
+                    activeOutlineColor={Colors.BLUE}
+                    left={<TextInput.Icon name='account' color={Colors.DARK_GRAY} />}
+                    value={name}
+                    onChangeText={name => setName(name)}
+                />
+                <View style={styles.innerMargin} />
+                <TextInput
+                    style={styles.textInput}
+                    mode='outlined'
+                    label="Set Password"
+                    secureTextEntry
+                    maxLength={24}
+                    activeOutlineColor={Colors.BLUE}
+                    left={<TextInput.Icon name='lock' color={Colors.DARK_GRAY} />}
+                    value={password}
+                    onChangeText={password => setPassword(password)}
+                />
+                <View style={styles.innerMargin} />
+                <TouchableOpacity
+                    style={styles.buttonSubmit}
+                    disabled={loading ? true : false}
+                    onPress={() => register()}
+                >
+                    {loading ?
+                        <ActivityIndicator color={'white'}/>
+                        : <Text style={styles.btnText}>REGISTER</Text>
+                    }
+                </TouchableOpacity>
+            </View>
+            <View style={{flex: 0.1, flexDirection: 'row'}}>
+                <Text style={{color: Colors.DARK_GRAY}}>Have an account already?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('LoginView')}>
+                    <Text style={{marginStart: 4, color: Colors.BLUE, fontWeight: '500'}}>Log In</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -139,22 +141,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: Colors.BLUE,
         borderRadius: 4,
-        flexDirection: 'row'
+        elevation: 4
     },
     btnText: {
         color: "#FFF",
         fontSize: 15,
         fontWeight: "500"
-    },
-    btn2: {
-        height: 30,
-        width: WIDTH < 768 ? WIDTH - 40 : '30%',
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    btnText2: {
-        fontSize: 14,
-        fontWeight: "500",
-        color: Colors.DARK_GRAY
     }
 })

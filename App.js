@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import { createStackNavigator } from '@react-navigation/stack';
-import { StatusBar, Alert, useWindowDimensions } from 'react-native';
+import { StatusBar, Alert, useWindowDimensions, Image } from 'react-native';
 import LoginView from './src/views/auth/LoginView';
 import RegisterView from './src/views/auth/RegisterView';
 import InProgressView from './src/views/drawer/InProgressView';
@@ -11,6 +11,7 @@ import ProfileView from "./src/views/drawer/ProfileView";
 import CreateProjectView from "./src/views/main/CreateProjectView";
 import ProjectDetailsView from "./src/views/main/ProjectDetailsView";
 import UpdateProjectView from "./src/views/main/UpdateProjectView";
+import SplashView from "./src/views/auth/SplashView";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -21,18 +22,32 @@ import Fontisto from 'react-native-vector-icons/Fontisto';
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator()
 
+function HeaderLogo() {
+  return (
+    <Image
+      style={{height: 30, width: 30}}
+      source={require('./assets/icon_1.png')}
+    />
+  )
+}
+
 function AuthNavigator() {
   return (
-    <Stack.Navigator initialRouteName="RegisterView">
+    <Stack.Navigator initialRouteName="SplashView">
+      <Stack.Screen
+        name="SplashView"
+        component={SplashView}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="RegisterView"
         component={RegisterView}
-        options={{headerShown: false}}
+        options={{headerTitle: (props) => <HeaderLogo {...props} />, headerTitleAlign: 'center'}}
       />
       <Stack.Screen
         name="LoginView"
         component={LoginView}
-        options={{title: ""}}
+        options={{headerTitle: (props) => <HeaderLogo {...props} />, headerTitleAlign: 'center'}}
       />
       <Stack.Screen
         name="MainScreen"

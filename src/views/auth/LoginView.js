@@ -50,49 +50,52 @@ const LoginView = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 32, fontWeight: '600'}}>Sign In</Text>
-            <View style={styles.innerMargin} />
-            <TextInput
-                style={styles.textInput}
-                mode='outlined'
-                label="Enter Email"
-                keyboardType="email-address"
-                activeOutlineColor={Colors.BLUE}
-                left={<TextInput.Icon name='email' color={Colors.DARK_GRAY} />}
-                value={email}
-                onChangeText={email => setEmail(email)}
-            />
-            <View style={styles.innerMargin} />
-            <TextInput
-                style={styles.textInput}
-                mode='outlined'
-                label="Password"
-                secureTextEntry
-                maxLength={24}
-                activeOutlineColor={Colors.BLUE}
-                left={<TextInput.Icon name='lock' color={Colors.DARK_GRAY} />}
-                value={password}
-                onChangeText={password => setPassword(password)}
-            />
-            <View style={styles.innerMargin} />
-            <TouchableOpacity
-                style={styles.buttonSubmit}
-                disabled={loading ? true : false}
-                onPress={() => login()}
-            >
-                {loading ? 
-                    <ActivityIndicator color={'white'} />
-                    : <Text style={styles.btnText}>LOGIN</Text>
-                }
-            </TouchableOpacity>
-            <View style={styles.innerMargin} />
-            <TouchableOpacity
-                style={styles.btn2}
-                disabled={loading ? true : false}
-                onPress={() => navigation.navigate("RegisterView")}
-            >
-                <Text style={styles.btnText2}>Create a new Account!</Text>
-            </TouchableOpacity>
+            <View style={{flex: 0.1, alignItems: 'center', justifyContent: 'center'}}>
+                <Text style={{fontSize: 28, fontWeight: '700'}}>
+                    Welcome back!
+                </Text>
+            </View>
+            <View style={{flex: 0.8, alignItems: 'center', justifyContent: 'center'}}>
+                <TextInput
+                    style={styles.textInput}
+                    mode='outlined'
+                    label="Enter Email"
+                    keyboardType="email-address"
+                    activeOutlineColor={Colors.BLUE}
+                    left={<TextInput.Icon name='email' color={Colors.DARK_GRAY} />}
+                    value={email}
+                    onChangeText={email => setEmail(email)}
+                />
+                <View style={styles.innerMargin} />
+                <TextInput
+                    style={styles.textInput}
+                    mode='outlined'
+                    label="Password"
+                    secureTextEntry
+                    maxLength={24}
+                    activeOutlineColor={Colors.BLUE}
+                    left={<TextInput.Icon name='lock' color={Colors.DARK_GRAY} />}
+                    value={password}
+                    onChangeText={password => setPassword(password)}
+                />
+                <View style={styles.innerMargin} />
+                <TouchableOpacity
+                    style={styles.buttonSubmit}
+                    disabled={loading ? true : false}
+                    onPress={() => login()}
+                >
+                    {loading ? 
+                        <ActivityIndicator color={'white'} />
+                        : <Text style={styles.btnText}>LOGIN</Text>
+                    }
+                </TouchableOpacity>
+            </View>
+            <View style={{flex: 0.1, flexDirection: 'row'}}>
+                <Text style={{color: Colors.DARK_GRAY}}>New here?</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('RegisterView')}>
+                    <Text style={{marginStart: 4, color: Colors.BLUE, fontWeight: '500'}}>Sign up</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -123,22 +126,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         backgroundColor: Colors.BLUE,
-        borderRadius: 4
+        borderRadius: 4,
+        elevation: 4
     },
     btnText: {
         color: "#FFF",
         fontSize: 15,
         fontWeight: "500"
-    },
-    btn2: {
-        height: 30,
-        width: WIDTH < 768 ? WIDTH - 40 : '30%',
-        alignItems: "center",
-        justifyContent: "center"
-    },
-    btnText2: {
-        fontSize: 14,
-        fontWeight: "500",
-        color: Colors.DARK_GRAY
     }
 })

@@ -12,7 +12,7 @@ const ProjectDetailsView = ({ route }) => {
     const iso = new Date(duedate)
     const ist = iso.toLocaleString()
     const createdISO = new Date(timestamp)
-    const createdIST = createdISO.toLocaleString()
+    const createdIST = createdISO.toLocaleDateString()
     console.log(duedate, iso, ist, createdIST)
 
     const addEventToCalendar = {
@@ -69,7 +69,7 @@ const ProjectDetailsView = ({ route }) => {
                     <Autolink text={title} email url phone='sms' />
                 </Text>
                 <Text style={styles.created}>
-                    Created: {createdIST}
+                    Created on {createdIST} at {createdISO.toLocaleTimeString()}
                 </Text>
                 <Text style={styles.description}>
                     <Autolink text={description} email url phone='sms' />

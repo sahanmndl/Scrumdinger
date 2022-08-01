@@ -156,7 +156,7 @@ const UpdateProjectView = ({ route }) => {
                     <List.Section>
                         <List.Accordion
                             style={{backgroundColor: 'white'}}
-                            title="Set Due Date and Time"
+                            title="Update due Date and Time"
                             titleStyle={{color: Colors.DARK_GRAY}}
                             left={props => <List.Icon {...props} icon="timer-sand" color={Colors.BLUE} />}
                         >

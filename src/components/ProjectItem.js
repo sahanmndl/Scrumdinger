@@ -13,7 +13,7 @@ const ProjectItem = ({ item }) => {
     const { _id, title, description, priority, image, category, duedate, timestamp } = item
 
     const iso = new Date(duedate)
-    const ist = iso.toLocaleString()
+    const ist = iso.toLocaleDateString()
 
     const deleteProject = async () => {
         await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
