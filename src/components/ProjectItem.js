@@ -33,7 +33,7 @@ const ProjectItem = ({ item }) => {
                     style: "cancel",
                 },
                 {
-                    text: 'OK',
+                    text: 'YES',
                     onPress: () => deleteProject()
                 }
             ],
@@ -63,7 +63,7 @@ const ProjectItem = ({ item }) => {
                     borderTopRightRadius={8}
                 /> : null
             }
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
                 <TouchableOpacity
                     style={{
                         borderColor: priority == 1 ? Colors.GREEN : priority == 2 ? Colors.YELLOW : Colors.RED, 
@@ -175,18 +175,15 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     dateBtn: {
-        borderColor: Colors.DARK_GRAY, 
-        borderWidth: 1, 
-        borderRadius: 8, 
         flexDirection: 'row',
         paddingVertical: 1.5,
-        paddingHorizontal: 4,
-        marginStart: 10
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     dateText: {
         color: Colors.DARK_GRAY, 
         fontSize: 12,
         fontWeight: '500',
-        marginStart: 6
+        marginStart: 4
     }
 })

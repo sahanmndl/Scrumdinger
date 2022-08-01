@@ -3,6 +3,8 @@ import { Alert, ScrollView, StyleSheet, Text, View, RefreshControl, TouchableOpa
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Colors from "../../constants/Colors";
 
 const ProfileView = () => {
     
@@ -94,15 +96,27 @@ const ProfileView = () => {
                 }
             >
                 <View style={styles.profileContainer}>
-                    <Text style={{fontSize: 20, fontWeight: '500'}}>
-                        {currentUser ? currentUser.name : 'loading...'}
-                    </Text>
-                    <Text style={{fontSize: 16, marginTop: 4}}>
-                        Email: {currentUser ? currentUser.email : 'loading...'}
-                    </Text>
-                    <Text style={{fontSize: 16, marginTop: 4}}>
-                        Total Projects: {currentUser ? currentUser.projects.length.toString() : 'loading...'}
-                    </Text>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <MaterialCommunityIcons name="account" size={24} color={Colors.DARK_GRAY} />
+                        <Text style={{fontSize: 17, marginStart: 10}}>
+                            {currentUser ? currentUser.name : 'loading...'}
+                        </Text>
+                    </View>
+                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: 10}}>
+                        <MaterialCommunityIcons name="email" size={24} color={Colors.DARK_GRAY} />
+                        <Text style={{fontSize: 17, marginStart: 10}}>
+                            {currentUser ? currentUser.email : 'loading...'}
+                        </Text>
+                    </View>
+                </View>
+                <View style={{height: 10}} />
+                <View style={styles.profileContainer}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                        <MaterialCommunityIcons name="format-list-bulleted" size={24} color={Colors.DARK_GRAY} />
+                        <Text style={{fontSize: 17, marginStart: 10}}>
+                            {currentUser ? currentUser.projects.length.toString() + ' Projects' : 'loading...'}
+                        </Text>
+                    </View>
                 </View>
             </ScrollView>
             <TouchableOpacity
@@ -129,10 +143,10 @@ const styles = StyleSheet.create({
         padding: 10
     },
     profileContainer: {
-        height: 200,
+        flex: 1,
         backgroundColor: 'white',
         padding: 10,
-        borderRadius: 8,
+        borderRadius: 4,
         elevation: 4
     },
     btnLogout: {

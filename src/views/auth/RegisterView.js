@@ -61,7 +61,8 @@ const RegisterView = () => {
                 mode='outlined'
                 label="Enter Email"
                 keyboardType="email-address"
-                left={<TextInput.Icon name='email' />}
+                activeOutlineColor={Colors.BLUE}
+                left={<TextInput.Icon name='email' color={Colors.DARK_GRAY} />}
                 value={email}
                 onChangeText={email => setEmail(email)}
             />
@@ -70,8 +71,9 @@ const RegisterView = () => {
                 style={styles.textInput}
                 mode='outlined'
                 label="Enter Your Name"
-                maxLength={16}
-                left={<TextInput.Icon name='account' />}
+                maxLength={100}
+                activeOutlineColor={Colors.BLUE}
+                left={<TextInput.Icon name='account' color={Colors.DARK_GRAY} />}
                 value={name}
                 onChangeText={name => setName(name)}
             />
@@ -81,8 +83,9 @@ const RegisterView = () => {
                 mode='outlined'
                 label="Set Password"
                 secureTextEntry
-                maxLength={16}
-                left={<TextInput.Icon name='lock' />}
+                maxLength={24}
+                activeOutlineColor={Colors.BLUE}
+                left={<TextInput.Icon name='lock' color={Colors.DARK_GRAY} />}
                 value={password}
                 onChangeText={password => setPassword(password)}
             />
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
         width: WIDTH < 768 ? WIDTH - 40 : '30%',
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: Colors.DARK2,
+        backgroundColor: Colors.BLUE,
         borderRadius: 4,
         flexDirection: 'row'
     },
@@ -152,6 +155,6 @@ const styles = StyleSheet.create({
     btnText2: {
         fontSize: 14,
         fontWeight: "500",
-        color: Colors.BLUE
+        color: Colors.DARK_GRAY
     }
 })

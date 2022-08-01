@@ -158,16 +158,16 @@ const UpdateProjectView = ({ route }) => {
                             style={{backgroundColor: 'white'}}
                             title="Set Due Date and Time"
                             titleStyle={{color: Colors.DARK_GRAY}}
-                            left={props => <List.Icon {...props} icon="timer-sand" color={Colors.DARK_GRAY} />}
+                            left={props => <List.Icon {...props} icon="timer-sand" color={Colors.BLUE} />}
                         >
                             <List.Item 
                                 title="Set Date"
-                                left={props => <List.Icon {...props} icon="calendar" color={Colors.BLUE} />}
+                                left={props => <List.Icon {...props} icon="calendar" color={Colors.DARK_GRAY} />}
                                 onPress={showDatepicker}
                             />
                             <List.Item
                                 title="Set Time"
-                                left={props => <List.Icon {...props} icon="clock-outline" color={Colors.BLUE} />}
+                                left={props => <List.Icon {...props} icon="clock-outline" color={Colors.DARK_GRAY} />}
                                 onPress={showTimepicker}
                             />
                         </List.Accordion>

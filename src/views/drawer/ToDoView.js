@@ -63,9 +63,9 @@ const ToDoView = () => {
                 onValueChange={(val) => setFilter(val)}
             >
                 <Picker.Item label="All" value="all"/>
-                <Picker.Item label="Low Priority" value="low"/>
-                <Picker.Item label="Medium Priority" value="medium"/>
-                <Picker.Item label="High Priority" value="high"/>
+                <Picker.Item label="Low Priority" value="low" color={Colors.GREEN} />
+                <Picker.Item label="Medium Priority" value="medium" color={Colors.YELLOW} />
+                <Picker.Item label="High Priority" value="high" color={Colors.RED} />
             </Picker>
             <View style={{flex: 1}}>
                 {loading ? <ActivityIndicator size={'large'} color={Colors.BLUE} /> :
