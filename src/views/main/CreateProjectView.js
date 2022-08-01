@@ -10,8 +10,6 @@ import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
 
 const CreateProjectView = () => {
 
-    var d = new Date();
-    console.log(d.getTime())
     const navigation = useNavigation()
     const [title, setTitle] = useState("")
     const [description, setDescription] = useState("")
@@ -19,12 +17,11 @@ const CreateProjectView = () => {
     const [category, setCategory] = useState("")
     const [priority, setPriority] = useState(0)
     const [loading, setLoading] = useState(false)
-    const [date, setDate] = useState(new Date(d.getTime()))
+    const [date, setDate] = useState(new Date(1692365400000)) //Aug 18 2023 19:00:00
 
     const onChange = (event, selectedDate) => {
         const currentDate = selectedDate;
-        setDate(currentDate);
-        console.log(currentDate)
+        setDate(currentDate)
     }
 
     const showMode = (currentMode) => {
@@ -33,19 +30,23 @@ const CreateProjectView = () => {
             onChange,
             mode: currentMode,
             is24Hour: true,
-        });
+        })
     }
 
     const showDatepicker = () => {
-        showMode('date');
+        showMode('date')
     }
 
     const showTimepicker = () => {
-        showMode('time');
+        showMode('time')
     }
 
     const createProject = async () => {
-        console.log(date.toString(), typeof(date))
+
+        const timestamp = new Date()
+        console.log(timestamp.getTime())
+        console.log(date.getTime(), typeof(date.getTime()))
+
         if(title.trim() == "" || description.trim() == "") {
             Alert.alert('Error!', 'Inputs cannot be empty')
         } else if(priority == 0) {
@@ -62,6 +63,8 @@ const CreateProjectView = () => {
                     image: image.trim(),
                     category: category,
                     priority: priority,
+                    duedate: date.getTime(),
+                    timestamp: timestamp.getTime(),
                     user: userId
                 })
                 const data = await response.data
@@ -81,34 +84,50 @@ const CreateProjectView = () => {
             <ScrollView
                 showsVerticalScrollIndicator={Platform.OS === 'web' ? true : false}
             >
-                <TextInput
-                    style={styles.textInput}
-                    activeUnderlineColor={Colors.BLUE}
-                    mode='flat'
-                    label="Image link"
-                    value={image}
-                    onChangeText={image => setImage(image)}
-                />
+                <View style={{flex: 1,
+                     paddingHorizontal: 8, 
+                     paddingBottom: 10, 
+                     backgroundColor: 'white', 
+                     borderRadius: 4,
+                     elevation: 2
+                }}>
+                    <TextInput
+                        style={{width: '100%', backgroundColor: 'white'}}
+                        activeUnderlineColor={Colors.BLUE}
+                        mode='flat'
+                        label="Image link"
+                        value={image}
+                        onChangeText={image => setImage(image)}
+                    />
+                </View>
                 <View style={styles.innerMargin} />
-                <TextInput
-                    style={styles.textInput}
-                    activeUnderlineColor={Colors.BLUE}
-                    mode='flat'
-                    label="Title *"
-                    maxLength={1024}
-                    value={title}
-                    onChangeText={title => setTitle(title)}
-                />
-                <View style={styles.innerMargin} />
-                <TextInput
-                    style={styles.textInput}
-                    activeUnderlineColor={Colors.BLUE}
-                    mode='flat'
-                    label="Description *"
-                    multiline={true}
-                    value={description}
-                    onChangeText={description => setDescription(description)}
-                />
+                <View style={{flex: 1,
+                     paddingHorizontal: 8, 
+                     paddingBottom: 10, 
+                     backgroundColor: 'white', 
+                     borderRadius: 4,
+                     elevation: 2
+                }}>
+                    <TextInput
+                        style={{width: '100%', backgroundColor: 'white'}}
+                        activeUnderlineColor={Colors.BLUE}
+                        mode='flat'
+                        label="Title *"
+                        maxLength={1024}
+                        value={title}
+                        onChangeText={title => setTitle(title)}
+                    />
+                    <View style={styles.innerMargin} />
+                    <TextInput
+                        style={{width: '100%', backgroundColor: 'white'}}
+                        activeUnderlineColor={Colors.BLUE}
+                        mode='flat'
+                        label="Description *"
+                        multiline={true}
+                        value={description}
+                        onChangeText={description => setDescription(description)}
+                    />
+                </View>
                 <View style={styles.innerMargin} />
                 <Picker
                     style={styles.picker}
@@ -116,31 +135,37 @@ const CreateProjectView = () => {
                     selectedValue={category}
                     onValueChange={(val) => setCategory(val)}
                 >
-                    <Picker.Item label="Set Category" value="category"/>
+                    <Picker.Item label="Set Category" value="category" color={Colors.DARK_GRAY} />
                     <Picker.Item label="To Do" value="todo"/>
                     <Picker.Item label="In Progress" value="progress"/>
                     <Picker.Item label="Backlogs" value="backlogs"/>
                     <Picker.Item label="Review" value="review"/>
                 </Picker>
-                <View style={styles.innerMargin} />
                 <Picker
                     style={styles.picker}
                     mode="dropdown"
                     selectedValue={priority}
                     onValueChange={(val) => setPriority(val)}
                 >
-                    <Picker.Item label="Set Priority Level" value={0} />
-                    <Picker.Item label="Low" value={1}/>
-                    <Picker.Item label="Medium" value={2}/>
-                    <Picker.Item label="High" value={3}/>
+                    <Picker.Item label="Set Priority Level" value={0} color={Colors.DARK_GRAY} />
+                    <Picker.Item label="Low" value={1} color={Colors.GREEN} />
+                    <Picker.Item label="Medium" value={2} color={Colors.YELLOW} />
+                    <Picker.Item label="High" value={3} color={Colors.RED}/>
                 </Picker>
                 <View style={styles.innerMargin} />
-                <View>
+                <View style={{
+                    flex: 1,
+                    backgroundColor: 'white', 
+                    borderRadius: 4,
+                    elevation: 2,
+                    paddingBottom: 6
+                }}>
                     <List.Section>
                         <List.Accordion
                             style={{backgroundColor: 'white'}}
                             title="Set Due Date and Time"
-                            left={props => <List.Icon {...props} icon="timer-sand" />}
+                            titleStyle={{color: Colors.DARK_GRAY}}
+                            left={props => <List.Icon {...props} icon="timer-sand" color={Colors.DARK_GRAY} />}
                         >
                             <List.Item 
                                 title="Set Date"
@@ -153,7 +178,10 @@ const CreateProjectView = () => {
                                 onPress={showTimepicker}
                             />
                         </List.Accordion>
-                        <View style={{alignItems: 'center', marginTop: 10}}>
+                        <View style={{alignItems: 'center', marginTop: 10, flexDirection: 'row', justifyContent: 'center'}}>
+                            <Text style={{fontSize: 16, color: Colors.DARK_GRAY, marginEnd: 10}}>
+                                Time Set: 
+                            </Text>
                             <Text style={{fontSize: 16}}>
                                 {date.toLocaleString()}
                             </Text>
@@ -161,6 +189,7 @@ const CreateProjectView = () => {
                     </List.Section>
                 </View>
             </ScrollView>
+            <View style={styles.innerMargin} />
             <TouchableOpacity
                 style={styles.buttonSubmit}
                 disabled={loading ? true : false}
@@ -183,7 +212,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 10,
-        backgroundColor: 'white',
+        backgroundColor: Colors.WHITISH2,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -215,6 +244,6 @@ const styles = StyleSheet.create({
     picker: {
         width: WIDTH - 20,
         borderWidth: 1,
-        backgroundColor: 'rgba(52, 52, 52, 0.0)',
+        backgroundColor: 'white'
     },
 })

@@ -9,7 +9,7 @@ import Autolink from "react-native-autolink";
 const ProjectItem = ({ item }) => {
 
     const navigation = useNavigation()
-    const { _id, title, description, priority, image, category } = item
+    const { _id, title, description, priority, image, category, duedate, timestamp } = item
 
     const deleteProject = async () => {
         await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
@@ -45,7 +45,9 @@ const ProjectItem = ({ item }) => {
                 title: title,
                 description: description,
                 image: image,
-                priority: priority
+                priority: priority,
+                duedate: duedate,
+                timestamp: timestamp
             })}
         >
             {image !== "" ?
@@ -106,7 +108,9 @@ const ProjectItem = ({ item }) => {
                         description: description,
                         image: image,
                         category: category,
-                        priority: priority
+                        priority: priority,
+                        duedate: duedate,
+                        timestamp: timestamp
                     })}
                 >
                     <Icon name="edit" size={24} color={Colors.BLUE} />
