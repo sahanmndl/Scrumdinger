@@ -43,8 +43,8 @@ const InProgressView = () => {
     }
 
     useEffect(() => {
-        readProjects()
-    }, [])
+        isFocused && readProjects()
+    }, [isFocused])
 
     return (
         <View style={styles.container}>

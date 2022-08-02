@@ -43,8 +43,8 @@ const ReviewView = () => {
     }
 
     useEffect(() => {
-        readProjects()
-    }, [])
+        isFocused && readProjects()
+    }, [isFocused])
 
     return (
         <View style={styles.container}>

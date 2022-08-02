@@ -46,8 +46,8 @@ const ToDoView = () => {
     }
 
     useEffect(() => {
-        readProjects()
-    }, [])
+        isFocused && readProjects()
+    }, [isFocused])
 
     return (
         <View style={styles.container}>
