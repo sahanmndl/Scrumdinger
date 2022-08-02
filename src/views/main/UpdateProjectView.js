@@ -65,8 +65,7 @@ const UpdateProjectView = ({ route }) => {
                 navigation.goBack()
                 return data
             } catch (err) {
-                console.log(err)
-                Alert.alert('Error!', err.message)
+                Alert.alert('Error!', 'Unable to update project')
             } finally {
                 setLoading(false)
             }
@@ -187,7 +186,9 @@ const UpdateProjectView = ({ route }) => {
             <TouchableOpacity
                 style={styles.buttonSubmit}
                 disabled={loading ? true : false}
-                onPress={() => updateProject()}
+                onPress={() => requestAnimationFrame(() => {
+                    updateProject()
+                })}
             >
                 {loading ?
                     <ActivityIndicator color={'white'}/>

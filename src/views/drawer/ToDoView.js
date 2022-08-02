@@ -21,7 +21,6 @@ const ToDoView = () => {
 
     const readProjects = async () => {
         const userId = await AsyncStorage.getItem('userId')
-        console.log(userId)
         try {
             setLoading(true)
             await axios.get(`${API_LINKS.PROJECT_URL}/user/${userId}`)
@@ -32,8 +31,8 @@ const ToDoView = () => {
                 })
             return true
         } catch (err) {
-            Alert.alert('Error!', err.message)
-            console.log(err)
+            Alert.alert('Error!', 'Cannot load projects! Please check your internet connection')
+            console.log(err.response)
             return false
         } finally {
             setRefresh(false)
@@ -85,7 +84,9 @@ const ToDoView = () => {
             </View>
             <TouchableOpacity
                 style={styles.fab}
-                onPress={() => navigation.navigate('CreateProjectView')}
+                onPress={() => requestAnimationFrame(() => {
+                    navigation.navigate('CreateProjectView')
+                })}
             >
                 <Feather name='plus' size={26} color='#FFF' />
             </TouchableOpacity>

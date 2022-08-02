@@ -13,7 +13,6 @@ const ProjectDetailsView = ({ route }) => {
     const ist = iso.toLocaleString()
     const createdISO = new Date(timestamp)
     const createdIST = createdISO.toLocaleDateString()
-    console.log(duedate, iso, ist, createdIST)
 
     const addEventToCalendar = {
         title: title,
@@ -57,7 +56,9 @@ const ProjectDetailsView = ({ route }) => {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={styles.dateBtn}
-                        onPress={() => Linking.openURL(google(addEventToCalendar))}
+                        onPress={() => requestAnimationFrame(() => {
+                            Linking.openURL(google(addEventToCalendar))
+                        })}
                     >
                         <MaterialCommunityIcons name="calendar-edit" size={18} color={Colors.BLUE} />
                         <Text style={styles.dateText}>
@@ -65,13 +66,13 @@ const ProjectDetailsView = ({ route }) => {
                         </Text>
                     </TouchableOpacity>
                 </View>
-                <Text style={styles.title}>
+                <Text style={styles.title} selectable={true}>
                     <Autolink text={title} email url phone='sms' />
                 </Text>
                 <Text style={styles.created}>
                     Created on {createdIST} at {createdISO.toLocaleTimeString()}
                 </Text>
-                <Text style={styles.description}>
+                <Text style={styles.description} selectable={true}>
                     <Autolink text={description} email url phone='sms' />
                 </Text>
             </ScrollView>

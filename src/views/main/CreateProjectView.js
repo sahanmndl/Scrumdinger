@@ -45,8 +45,6 @@ const CreateProjectView = () => {
     const createProject = async () => {
 
         const timestamp = new Date()
-        console.log(timestamp.getTime())
-        console.log(date.getTime(), typeof(date.getTime()))
 
         if(title.trim() == "" || description.trim() == "") {
             Alert.alert('Error!', 'Inputs cannot be empty')
@@ -72,8 +70,7 @@ const CreateProjectView = () => {
                 navigation.goBack()
                 return data
             } catch (err) {
-                console.log(err)
-                Alert.alert('Error!', err.message)
+                Alert.alert('Error!', 'Unable to create new project')
             } finally {
                 setLoading(false)
             }
@@ -194,7 +191,9 @@ const CreateProjectView = () => {
             <TouchableOpacity
                 style={styles.buttonSubmit}
                 disabled={loading ? true : false}
-                onPress={() => createProject()}
+                onPress={() => requestAnimationFrame(() => {
+                    createProject()
+                })}
             >
                 {loading ?
                     <ActivityIndicator color={'white'}/>

@@ -19,7 +19,6 @@ const ReviewView = () => {
 
     const readProjects = async () => {
         const userId = await AsyncStorage.getItem('userId')
-        console.log(userId)
         try {
             setLoading(true)
             await axios.get(`${API_LINKS.PROJECT_URL}/user/${userId}`)
@@ -30,8 +29,7 @@ const ReviewView = () => {
                 })
             return true
         } catch (err) {
-            Alert.alert('Error!', err.message)
-            console.log(err)
+            Alert.alert('Error!', 'Cannot load projects! Please check your internet connection')
             return false
         } finally {
             setRefresh(false)

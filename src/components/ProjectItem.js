@@ -45,14 +45,16 @@ const ProjectItem = ({ item }) => {
     return (
         <TouchableOpacity 
             style={styles.container}
-            onPress={() => navigation.navigate('ProjectDetailsView', {
-                _id: _id,
-                title: title,
-                description: description,
-                image: image,
-                priority: priority,
-                duedate: duedate,
-                timestamp: timestamp
+            onPress={() => requestAnimationFrame(() => {
+                navigation.navigate('ProjectDetailsView', {
+                    _id: _id,
+                    title: title,
+                    description: description,
+                    image: image,
+                    priority: priority,
+                    duedate: duedate,
+                    timestamp: timestamp
+                })
             })}
         >
             {image !== "" ?
@@ -116,16 +118,18 @@ const ProjectItem = ({ item }) => {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={{alignSelf: 'flex-end'}}
-                    onPress={() => navigation.navigate('UpdateProjectView', {
-                        _id: _id,
-                        title: title,
-                        description: description,
-                        image: image,
-                        category: category,
-                        priority: priority,
-                        duedate: duedate,
-                        timestamp: timestamp
-                    })}
+                    onPress={() => requestAnimationFrame(() => {
+                            navigation.navigate('UpdateProjectView', {
+                                _id: _id,
+                                title: title,
+                                description: description,
+                                image: image,
+                                category: category,
+                                priority: priority,
+                                duedate: duedate,
+                                timestamp: timestamp
+                            })
+                        })}
                 >
                     <Icon name="edit" size={24} color={Colors.BLUE} />
                 </TouchableOpacity>

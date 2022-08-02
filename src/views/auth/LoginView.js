@@ -27,7 +27,6 @@ const LoginView = () => {
                     password: password.trim()
                 })
                 const data = await response.data
-                console.log(data)
 
                 await AsyncStorage.setItem('user', JSON.stringify(data.user))
                 await AsyncStorage.setItem('userId', data.user._id)
@@ -38,8 +37,7 @@ const LoginView = () => {
                 })
                 return true
             } catch (err) {
-                console.log(err)
-                Alert.alert('Error!', err.message)
+                Alert.alert('Error!', err.response.data.message)
                 return false
             } finally {
                 setEmail("")

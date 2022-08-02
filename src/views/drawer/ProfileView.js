@@ -23,16 +23,13 @@ const ProfileView = () => {
                 .then((response) => setCurrentUser(response.data.user))
                 .catch((e) => {
                     Alert.alert('', 'Error!')
-                    console.log(e)
                 })
             })
             .catch((e) => {
                 Alert.alert('', 'Error!')
-                console.log(e)
             })
         } catch (err) {
-            console.log(err)
-            Alert.alert('Error!', err.message)
+            Alert.alert('Error!', 'Cannot load profile details')
         } finally {
             setRefresh(false)
         }
@@ -60,8 +57,7 @@ const ProfileView = () => {
                 return true
             })
         } catch (err) {
-            console.log(err)
-            Alert.alert('Error!', err.message)
+            Alert.alert('Error!', '')
             return false
         } finally {
             setLoading(false)
