@@ -4,7 +4,7 @@
     "slug": "Scrumdinger",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/icon_1.png",
     "userInterfaceStyle": "light",
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -17,12 +17,15 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon_1.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.san101.scrumdinger",
+      "versionCode": 1,
+      "icon": "./assets/icon_1.png"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/icon_1.png"
     }
   }
 }
