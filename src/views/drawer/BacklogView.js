@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import NoResults from "../../components/NoResults";
 import { Picker } from "@react-native-picker/picker";
+import API_LINKS from "../../constants/API_LINKS";
 
 const BacklogView = () => {
 
@@ -21,7 +22,7 @@ const BacklogView = () => {
         console.log(userId)
         try {
             setLoading(true)
-            await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
+            await axios.get(`${API_LINKS.PROJECT_URL}/user/${userId}`)
                 .then((response) => {
                     var json = response.data.projects.projects
                     var filteredJSON = json.filter(it => it.category == "backlogs")

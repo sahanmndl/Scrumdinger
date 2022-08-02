@@ -6,6 +6,7 @@ import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import API_LINKS from "../../constants/API_LINKS";
 
 const UpdateProjectView = ({ route }) => {
 
@@ -52,7 +53,7 @@ const UpdateProjectView = ({ route }) => {
         } else {
             setLoading(true)
             try {
-                const response = await axios.put(`http://10.2.71.238:8000/api/project/update/${_id}`, {
+                const response = await axios.put(`${API_LINKS.PROJECT_URL}/update/${_id}`, {
                     title: titleUpdate.trim(),
                     description: descriptionUpdate.trim(),
                     image: imageUpdate.trim(),

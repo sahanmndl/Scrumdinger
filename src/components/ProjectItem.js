@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Autolink from "react-native-autolink";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import API_LINKS from "../constants/API_LINKS";
 
 const ProjectItem = ({ item }) => {
 
@@ -16,7 +17,7 @@ const ProjectItem = ({ item }) => {
     const ist = iso.toLocaleDateString()
 
     const deleteProject = async () => {
-        await axios.delete(`http://10.2.71.238:8000/api/project/${_id}`)
+        await axios.delete(`${API_LINKS.PROJECT_URL}/${_id}`)
             .then(() => 
                 Platform.OS == 'android' ? ToastAndroid.show('Project deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
                 : Platform.OS == 'ios' ? Alert.alert('Success!', 'Project deleted') : null)

@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { Picker } from "@react-native-picker/picker";
 import { DateTimePickerAndroid } from "@react-native-community/datetimepicker";
+import API_LINKS from "../../constants/API_LINKS";
 
 const CreateProjectView = () => {
 
@@ -57,7 +58,7 @@ const CreateProjectView = () => {
             setLoading(true)
             try {
                 const userId = await AsyncStorage.getItem('userId')
-                const response = await axios.post('http://10.2.71.238:8000/api/project/create', {
+                const response = await axios.post(`${API_LINKS.PROJECT_URL}/create`, {
                     title: title.trim(),
                     description: description.trim(),
                     image: image.trim(),

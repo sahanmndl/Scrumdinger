@@ -12,3 +12,5 @@ web-build/
 
 # macOS
 .DS_Store
+
+src/constants/API_LINKS.js

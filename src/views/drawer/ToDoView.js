@@ -8,6 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import NoResults from "../../components/NoResults";
 import { Picker } from "@react-native-picker/picker";
+import API_LINKS from "../../constants/API_LINKS";
 
 const ToDoView = () => {
 
@@ -23,12 +24,7 @@ const ToDoView = () => {
         console.log(userId)
         try {
             setLoading(true)
-            /**const response = await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
-            const data = response.data
-            console.log(data.projects.projects)
-            const json = data.projects.projects
-            setProjects([...json])*/
-            await axios.get(`http://10.2.71.238:8000/api/project/user/${userId}`)
+            await axios.get(`${API_LINKS.PROJECT_URL}/user/${userId}`)
                 .then((response) => {
                     var json = response.data.projects.projects
                     var filteredJSON = json.filter(it => it.category == "todo")
