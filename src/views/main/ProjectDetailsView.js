@@ -1,13 +1,18 @@
 import React from "react";
-import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity, Linking } from "react-native";
+import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity, Linking, Dimensions, Alert, ToastAndroid } from "react-native";
 import Colors from "../../constants/Colors";
 import Autolink from "react-native-autolink";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import BottomSheet from "react-native-simple-bottom-sheet";
 import { google } from "calendar-link";
+import { useNavigation } from "@react-navigation/native";
 
 const ProjectDetailsView = ({ route }) => {
 
-    const {_id, title, description, image, priority, duedate, timestamp} = route.params
+    const {_id, title, description, image, category, priority, duedate, timestamp} = route.params
+
+    const navigation = useNavigation()
 
     const iso = new Date(duedate)
     const ist = iso.toLocaleString()
@@ -76,15 +81,57 @@ const ProjectDetailsView = ({ route }) => {
                     <Autolink text={description} email url phone='sms' />
                 </Text>
             </ScrollView>
+            <BottomSheet isOpen={false} lineStyle={{backgroundColor: Colors.DARK_GRAY}}>
+                <View style={{flexDirection: 'row', paddingBottom: 20}}>
+                    <TouchableOpacity
+                        style={styles.btnAssign}
+                        onPress={() => requestAnimationFrame(() => {
+                            console.log('assign')
+                        })}
+                    >
+                        <Icon style={{marginEnd: 10}} name="assignment" size={20} color={Colors.GREEN} />
+                        <Text style={{color: Colors.GREEN, fontSize: 15, fontWeight: "500"}}>Assign</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.btnEdit}
+                        onPress={() => requestAnimationFrame(() => {
+                            navigation.navigate('UpdateProjectView', {
+                                _id: _id,
+                                title: title,
+                                description: description,
+                                image: image,
+                                category: category,
+                                priority: priority,
+                                duedate: duedate,
+                                timestamp: timestamp
+                            })
+                        })}
+                    >
+                        <Icon style={{marginEnd: 10}} name="edit" size={20} color={Colors.BLUE} />
+                        <Text style={{color: Colors.BLUE, fontSize: 15, fontWeight: "500"}}>Edit</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.btnDelete}
+                        onPress={() => requestAnimationFrame(() => {
+                            console.log('assign')
+                        })}
+                    >
+                        <Icon style={{marginEnd: 10}} name="delete" size={20} color={Colors.RED} />
+                        <Text style={{color: Colors.RED, fontSize: 15, fontWeight: "500"}}>Delete</Text>
+                    </TouchableOpacity>
+                </View>
+            </BottomSheet>
         </View>
     )
 }
 
 export default ProjectDetailsView
 
+const WIDTH = Dimensions.get('window').width
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 2,
         backgroundColor: 'white',
         padding: 10
     },
@@ -124,5 +171,42 @@ const styles = StyleSheet.create({
         fontSize: 13,
         fontWeight: '500',
         marginStart: 6
+    },
+    innerMargin: {
+        height: 10
+    },
+    btnAssign: {
+        flex: 1,
+        height: 40,
+        width: WIDTH < 768 ? WIDTH - 20 : '100%',
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: Colors.GREEN,
+        flexDirection: 'row'
+    },
+    btnEdit: {
+        flex: 1,
+        height: 40,
+        width: WIDTH < 768 ? WIDTH - 20 : '100%',
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: Colors.BLUE,
+        flexDirection: 'row',
+        marginHorizontal: 10
+    },
+    btnDelete: {
+        flex: 1,
+        height: 40,
+        width: WIDTH < 768 ? WIDTH - 20 : '100%',
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 4,
+        borderWidth: 1,
+        borderColor: Colors.RED,
+        flexDirection: 'row'
     }
 })

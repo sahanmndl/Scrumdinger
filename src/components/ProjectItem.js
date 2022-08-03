@@ -51,6 +51,7 @@ const ProjectItem = ({ item }) => {
                     title: title,
                     description: description,
                     image: image,
+                    category: category,
                     priority: priority,
                     duedate: duedate,
                     timestamp: timestamp
