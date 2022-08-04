@@ -1,5 +1,5 @@
-import React from "react";
-import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity, Linking, Dimensions, Alert, ToastAndroid } from "react-native";
+import React, { useState } from "react";
+import { Image, Platform, ScrollView, StyleSheet, Text, View, TouchableOpacity, Linking, Dimensions, Alert, ToastAndroid, ActivityIndicator } from "react-native";
 import Colors from "../../constants/Colors";
 import Autolink from "react-native-autolink";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,12 +7,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import BottomSheet from "react-native-simple-bottom-sheet";
 import { google } from "calendar-link";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import API_LINKS from "../../constants/API_LINKS";
 
 const ProjectDetailsView = ({ route }) => {
 
     const {_id, title, description, image, category, priority, duedate, timestamp} = route.params
 
     const navigation = useNavigation()
+    const [loading, setLoading] = useState(false)
 
     const iso = new Date(duedate)
     const ist = iso.toLocaleString()
@@ -23,6 +26,35 @@ const ProjectDetailsView = ({ route }) => {
         title: title,
         description: description,
         start: iso
+    }
+
+    const deleteProject = async () => {
+        setLoading(true)
+        await axios.delete(`${API_LINKS.PROJECT_URL}/${_id}`)
+            .then(() => 
+                Platform.OS == 'android' ? ToastAndroid.show('Project deleted!', ToastAndroid.LONG, ToastAndroid.BOTTOM)
+                : Platform.OS == 'ios' ? Alert.alert('Success!', 'Project deleted') : null)
+            .then(() => navigation.goBack())
+            .catch(() => Alert.alert('Error!', 'Cannot delete project'))
+            .finally(() => setLoading(false))
+    }
+
+    const deleteAlert = () => {
+        Alert.alert(
+            "Confirmation", "Do you want to delete this project?",
+            [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log("Cancel"),
+                    style: "cancel",
+                },
+                {
+                    text: 'YES',
+                    onPress: () => deleteProject()
+                }
+            ],
+            {cancelable: true}
+        )
     }
 
     return (
@@ -112,11 +144,15 @@ const ProjectDetailsView = ({ route }) => {
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.btnDelete}
+                        disabled={loading ? true : false}
                         onPress={() => requestAnimationFrame(() => {
-                            console.log('assign')
+                            deleteAlert()
                         })}
                     >
-                        <Icon style={{marginEnd: 10}} name="delete" size={20} color={Colors.RED} />
+                        {loading ?
+                            <ActivityIndicator style={{marginEnd: 10}} size={'small'} color={Colors.RED} />
+                            : <Icon style={{marginEnd: 10}} name="delete" size={20} color={Colors.RED} />
+                        }
                         <Text style={{color: Colors.RED, fontSize: 15, fontWeight: "500"}}>Delete</Text>
                     </TouchableOpacity>
                 </View>
@@ -181,10 +217,9 @@ const styles = StyleSheet.create({
         width: WIDTH < 768 ? WIDTH - 20 : '100%',
         alignItems: "center",
         justifyContent: "center",
-        borderRadius: 4,
-        borderWidth: 1,
         borderColor: Colors.GREEN,
-        flexDirection: 'row'
+        borderRadius: 4,
+        flexDirection: 'row',
     },
     btnEdit: {
         flex: 1,
@@ -193,7 +228,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 4,
-        borderWidth: 1,
         borderColor: Colors.BLUE,
         flexDirection: 'row',
         marginHorizontal: 10
@@ -205,7 +239,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 4,
-        borderWidth: 1,
         borderColor: Colors.RED,
         flexDirection: 'row'
     }
