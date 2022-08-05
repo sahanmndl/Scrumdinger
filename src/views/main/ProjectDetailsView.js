@@ -118,7 +118,7 @@ const ProjectDetailsView = ({ route }) => {
                     <TouchableOpacity
                         style={styles.btnAssign}
                         onPress={() => requestAnimationFrame(() => {
-                            console.log('assign')
+                            ToastAndroid.show('Under development', ToastAndroid.LONG, ToastAndroid.BOTTOM)
                         })}
                     >
                         <Icon style={{marginEnd: 10}} name="assignment" size={20} color={Colors.GREEN} />

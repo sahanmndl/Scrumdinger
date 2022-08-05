@@ -11,6 +11,7 @@ import ProfileView from "./src/views/drawer/ProfileView";
 import CreateProjectView from "./src/views/main/CreateProjectView";
 import ProjectDetailsView from "./src/views/main/ProjectDetailsView";
 import UpdateProjectView from "./src/views/main/UpdateProjectView";
+import AssignProjectView from "./src/views/main/AssignProjectView";
 import SplashView from "./src/views/auth/SplashView";
 import { NavigationContainer } from "@react-navigation/native";
 import { useEffect, useState } from "react";
@@ -80,6 +81,11 @@ function MainNavigator() {
         name="ProjectDetailsView"
         component={ProjectDetailsView}
         options={{title: ""}}
+      />
+      <Stack.Screen
+        name="AssignProjectView"
+        component={AssignProjectView}
+        options={{title: "Assign Project"}}
       />
       <Stack.Screen
         name="AuthScreen"

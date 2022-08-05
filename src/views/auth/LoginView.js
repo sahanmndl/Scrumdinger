@@ -85,7 +85,7 @@ const LoginView = () => {
                 >
                     {loading ? 
                         <ActivityIndicator color={'white'} />
-                        : <Text style={styles.btnText}>LOGIN</Text>
+                        : <Text style={styles.btnText}>Login</Text>
                     }
                 </TouchableOpacity>
             </View>

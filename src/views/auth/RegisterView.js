@@ -99,7 +99,7 @@ const RegisterView = () => {
                 >
                     {loading ?
                         <ActivityIndicator color={'white'}/>
-                        : <Text style={styles.btnText}>REGISTER</Text>
+                        : <Text style={styles.btnText}>Register</Text>
                     }
                 </TouchableOpacity>
             </View>
