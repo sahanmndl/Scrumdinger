@@ -38,6 +38,7 @@ const LoginView = () => {
                 return true
             } catch (err) {
                 Alert.alert('Error!', err.response.data.message)
+                console.log(err.response.data)
                 return false
             } finally {
                 setEmail("")
